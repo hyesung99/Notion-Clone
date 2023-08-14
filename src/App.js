@@ -1,6 +1,6 @@
-import Component from "./core/Component.js";
-import { DocumentTreeComponent, EditorComponent } from "./Component/index.js";
-import { getDocumentTree } from "./service/index.js";
+import Component from './core/Component.js'
+import { DocumentTreeComponent, EditorComponent } from './Component/index.js'
+import { getDocumentTree } from './service/index.js'
 import {
   addDocumentButtonClickEvent,
   documentLinkClickEvent,
@@ -10,45 +10,45 @@ import {
   titleKeyupEvent,
   titleFocusoutEvent,
   textareaFocusoutEvent,
-} from "./events/index.js";
-import { hashRouter } from "./router/hashRouter.js";
-import { getDocument, getRecentDocument } from "./service/documentService.js";
+} from './events/index.js'
+import { hashRouter } from './router/hashRouter.js'
+import { getRecentDocument } from './service/documentService.js'
 
 export default class App extends Component {
   mount() {
     hashRouter.observe(async () => {
-      this.editor.state = await getRecentDocument();
-    });
+      this.editor.state = await getRecentDocument()
+    })
   }
 
   async render() {
     this.$target.innerHTML = `
       <aside id='documentTree'></aside>
       <section id='editor'></section>
-    `;
+    `
 
-    const $documentTree = this.$target.querySelector("#documentTree");
-    const $editor = this.$target.querySelector("#editor");
+    const $documentTree = this.$target.querySelector('#documentTree')
+    const $editor = this.$target.querySelector('#editor')
     this.documentTree = new DocumentTreeComponent({
       $target: $documentTree,
       initialState: await getDocumentTree(),
       props: {},
       events: [
         {
-          action: "click",
-          tag: "a",
-          target: "li",
+          action: 'click',
+          tag: 'a',
+          target: 'li',
           callback: ({ target, event }) => {
             documentLinkClickEvent({
               url: target.id,
               event,
-            });
+            })
           },
         },
         {
-          action: "click",
-          tag: ".addDocumentButton",
-          target: "li",
+          action: 'click',
+          tag: '.addDocumentButton',
+          target: 'li',
           callback: ({ event, target }) =>
             addDocumentButtonClickEvent({
               event,
@@ -57,9 +57,9 @@ export default class App extends Component {
             }),
         },
         {
-          action: "click",
-          tag: ".deleteDocumentButton",
-          target: "li",
+          action: 'click',
+          tag: '.deleteDocumentButton',
+          target: 'li',
           callback: async ({ target }) =>
             deleteDocumentButtonClickEvent({
               documentTree: this.documentTree,
@@ -68,9 +68,9 @@ export default class App extends Component {
             }),
         },
         {
-          action: "change",
-          tag: "input",
-          target: "li",
+          action: 'change',
+          tag: 'input',
+          target: 'li',
           callback: async ({ event, target }) =>
             documentInputChangeEvent({
               event,
@@ -79,7 +79,7 @@ export default class App extends Component {
             }),
         },
       ],
-    });
+    })
 
     this.editor = new EditorComponent({
       $target: $editor,
@@ -87,51 +87,51 @@ export default class App extends Component {
       props: {},
       events: [
         {
-          action: "keyup",
-          tag: ".textarea",
-          target: ".textarea",
+          action: 'keyup',
+          tag: '.textarea',
+          target: '.textarea',
           callback: ({ target }) => {
             textareaKeyupEvent({
               title: this.editor.state.title,
               content: target.textContent,
-            });
+            })
           },
         },
         {
-          action: "keyup",
-          tag: ".title",
-          target: ".title",
+          action: 'keyup',
+          tag: '.title',
+          target: '.title',
           callback: ({ target }) => {
             titleKeyupEvent({
               title: target.textContent,
               content: this.editor.state.content,
-            });
+            })
           },
         },
         {
-          action: "focusout",
-          tag: ".title",
-          target: ".title",
+          action: 'focusout',
+          tag: '.title',
+          target: '.title',
           callback: async ({ target }) => {
             titleFocusoutEvent({
               documentTree: this.documentTree,
               editor: this.editor,
               title: target.textContent,
-            });
+            })
           },
         },
         {
-          action: "focusout",
-          tag: ".textarea",
-          target: ".textarea",
+          action: 'focusout',
+          tag: '.textarea',
+          target: '.textarea',
           callback: ({ target }) => {
             textareaFocusoutEvent({
               editor: this.editor,
               content: target.textContent,
-            });
+            })
           },
         },
       ],
-    });
+    })
   }
 }
