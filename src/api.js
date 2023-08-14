@@ -1,13 +1,13 @@
-export const API_END_POINT = "https://kdt-frontend.programmers.co.kr";
+export const API_END_POINT = 'https://kdt-frontend.programmers.co.kr'
 
 export const request = async (url, options = {}) => {
   const res = await fetch(`${API_END_POINT}${url}`, {
     ...options,
     headers: {
-      "x-username": "sungbird",
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
+      'x-username': 'sungbird',
     },
-  });
+  })
 
-  return await res.json();
-};
+  return await res.json()
+}
