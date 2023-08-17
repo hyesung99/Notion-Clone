@@ -1,38 +1,43 @@
-import Component from "../core/Component.js";
-import { DocumentTreeBranch } from "../domain/index.js";
-import { DocumentTreeBranchComponent } from "./index.js";
+import Component from '../core/Component.js'
+import { DocumentTreeBranch } from '../domain/index.js'
+import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
-  render() {
-    this.$target.innerHTML = `
+  template() {
+    return `
     <div class="rootUl">
     </div>
     <button class="addRootDocumentButton addDocumentButton">+</button>
-    `;
-
-    const $rootUl = this.$target.querySelector(".rootUl");
-    this.state.documentTree.forEach((doc) => {
-      this.getTemplate({
-        $target: $rootUl,
-        doc,
-      });
-    });
+    `
   }
 
-  getTemplate({ $target, doc }) {
-    new DocumentTreeBranchComponent({
-      $target,
-      initialState: new DocumentTreeBranch(doc),
-      props: {},
-      events: [],
-    });
+  render() {
+    this.$target.innerHTML = this.template()
+    const { documentTree } = this.state
+    const $rootUl = this.$target.querySelector('.rootUl')
+    documentTree.documentTree.forEach((doc) => {
+      this.createDocumentBranch({
+        $target: $rootUl,
+        doc,
+      })
+    })
+  }
+
+  createDocumentBranch({ $target, doc }) {
+    this.createChildComponent({
+      component: DocumentTreeBranchComponent,
+      componentOptions: {
+        $target,
+        initialState: { branch: new DocumentTreeBranch(doc) },
+      },
+    })
 
     if (doc.documents.length > 0) {
-      const $ul = document.createElement("ul");
-      $target.appendChild($ul);
+      const $ul = document.createElement('ul')
+      $target.appendChild($ul)
       doc.documents.forEach((childDoc) => {
-        this.getTemplate({ $target: $ul, doc: childDoc });
-      });
+        this.createDocumentBranch({ $target: $ul, doc: childDoc })
+      })
     }
   }
 }

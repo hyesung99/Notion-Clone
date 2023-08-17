@@ -1,18 +1,22 @@
-import Component from "../core/Component.js";
+import Component from '../core/Component.js'
 
 export default class DocumentTreeBranchComponent extends Component {
-  render() {
-    const $li = document.createElement("li");
-    $li.id = this.state.id;
-    $li.innerHTML = `
-      <span class="documentLicontainer">
-          <a class="documentLink" href="/documents/${this.state.id}">${this.state.title}</a>
+  template() {
+    const { title, id } = this.state.branch
+    return `
+    <span class="documentLicontainer">
+          <a class="documentLink" href="/documents/${id}">${title}</a>
           <span class="documentTreeButtonContainer">
-            <button class="addDocumentButton" data-id="${this.state.id}">+</button>
-            <button class="deleteDocumentButton" data-id="${this.state.id}">x</button>
+            <button class="addDocumentButton" data-id="${id}">+</button>
+            <button class="deleteDocumentButton" data-id="${id}">x</button>
           </span>
         </span> 
-    `;
-    this.$target.appendChild($li);
+    `
+  }
+  render() {
+    const $li = document.createElement('li')
+    $li.id = this.state.branch.id
+    $li.innerHTML = this.template()
+    this.$target.appendChild($li)
   }
 }
