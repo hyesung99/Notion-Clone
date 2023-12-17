@@ -1,6 +1,6 @@
 import { getItem, setItem, removeItem } from '../storage/storage.js'
 import { hashRouter } from '../router/hashRouter.js'
-import { DOCUMENT_KEY } from '../constants/apiKey.js'
+import { DOCUMENT_KEY } from '../constants/api.js'
 
 export const saveDocumentToStorage = ({ title, content }) => {
   setItem(DOCUMENT_KEY + hashRouter.url, {

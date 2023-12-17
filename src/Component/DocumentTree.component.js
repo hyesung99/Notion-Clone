@@ -1,5 +1,6 @@
 import Component from '../core/Component.js'
 import { DocumentTreeBranch } from '../domain/index.js'
+import { getDocumentTree } from '../service/documentTree.service.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -15,7 +16,7 @@ export default class DocumentTreeComponent extends Component {
     this.$target.innerHTML = this.template()
     const { documentTree } = this.state
     const $rootUl = this.$target.querySelector('.rootUl')
-    documentTree.documentTree.forEach((doc) => {
+    documentTree.forEach((doc) => {
       this.createDocumentBranch({
         $target: $rootUl,
         doc,
