@@ -6,15 +6,8 @@ import {
   cloneDomain,
   removeDocumentFromStorage,
 } from './index.js'
-import { DOCUMENT_KEY } from '../constants/apiKey.js'
-
-export const getDocumentTree = async () => {
-  return await request(DOCUMENT_KEY, {
-    mothod: 'GET',
-  }).then((res) => {
-    return new DocumentTree({ documentTree: res, isInput: false })
-  })
-}
+import { DOCUMENT_KEY } from '../constants/api.js'
+import NotionFetchClient from '../apis/NotionFetchClient.js'
 
 export const getDocument = async () => {
   if (hashRouter.url === '') {
@@ -52,7 +45,6 @@ export const getRecentDocument = async () => {
       },
     })
   } else {
-    console.log(storageDocument)
     return serverDocument
   }
 }

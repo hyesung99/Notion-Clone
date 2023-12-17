@@ -1,6 +1,5 @@
 import Component from './core/Component.js'
 import { DocumentTreeComponent, EditorComponent } from './Component/index.js'
-import { getDocumentTree } from './service/index.js'
 import {
   addDocumentButtonClickEvent,
   documentLinkClickEvent,
@@ -13,6 +12,7 @@ import {
 } from './events/index.js'
 import { hashRouter } from './router/hashRouter.js'
 import { getRecentDocument } from './service/documentService.js'
+import { getDocumentTree } from './apis/documentTree.api.js'
 
 export default class App extends Component {
   mount() {
