@@ -9,17 +9,17 @@ class FetchClient {
 
   async get(url, option = {}) {
     const response = await fetch(`${this.baseURL}${url}`, {
-      ..._BASE_OPTION,
+      ...this.baseOption,
       ...option,
       method: 'GET',
     })
 
-    return JSON.parse(response)
+    return response.json()
   }
 
   async post(url, data, option = {}) {
     const response = await fetch(`${this.baseURL}${url}`, {
-      ..._BASE_OPTION,
+      ...this.baseOption,
       ...option,
       method: 'POST',
       body: JSON.stringify(data),
@@ -30,7 +30,7 @@ class FetchClient {
 
   async put(url, data, option = {}) {
     const response = fetch(`${this.baseURL}${url}`, {
-      ..._BASE_OPTION,
+      ...this.baseOption,
       ...option,
       method: 'PUT',
       body: JSON.stringify(data),
@@ -39,9 +39,9 @@ class FetchClient {
     return JSON.parse(response)
   }
 
-  delete(url, option = {}) {
+  async delete(url, option = {}) {
     const response = fetch(`${this.baseURL}${url}`, {
-      ..._BASE_OPTION,
+      ...this.baseOption,
       ...option,
       method: 'DELETE',
     })
@@ -49,3 +49,5 @@ class FetchClient {
     return JSON.parse(response)
   }
 }
+
+export default FetchClient
