@@ -1,13 +1,12 @@
 import Component from '../core/Component.js'
 import { DocumentTreeBranch } from '../domain/index.js'
-import { getDocumentTree } from '../service/documentTree.service.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
   template() {
     return `
-    <div class="rootUl">
-    </div>
+    <ul class="rootUl">
+    </ul>
     <button class="addRootDocumentButton addDocumentButton">+</button>
     `
   }
@@ -29,7 +28,7 @@ export default class DocumentTreeComponent extends Component {
       component: DocumentTreeBranchComponent,
       componentOptions: {
         $target,
-        initialState: { branch: new DocumentTreeBranch(doc) },
+        initialState: doc,
       },
     })
 
