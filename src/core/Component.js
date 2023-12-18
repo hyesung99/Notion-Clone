@@ -21,9 +21,15 @@ export default class Component {
     return ''
   }
   created() {}
-  setEvent(events) {
-    events.forEach((event) => this.setEventDelegation(event))
+
+  setEvent(action, selector, callback) {
+    this.$target.addEventListener(action, (event) => {
+      if (event.target.closest(`${selector}`)) {
+        callback({ event, target: event.target.closest(selector) })
+      }
+    })
   }
+
   setState(nextState) {
     this.state = nextState
     this.render()
@@ -32,16 +38,9 @@ export default class Component {
     this.$target.innerHTML = this.template()
   }
 
-  setEventDelegation({ action, tag, target, callback }) {
-    this.$target.addEventListener(action, (event) => {
-      if (event.target.closest(`${tag}`)) {
-        callback({ event, target: event.target.closest(target) })
-      }
-    })
-  }
   mounted() {}
 
   createChildComponent({ component, componentOptions }) {
-    return new component(componentOptions)
+    new component(componentOptions)
   }
 }
