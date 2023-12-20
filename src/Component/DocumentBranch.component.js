@@ -1,7 +1,3 @@
-import {
-  deleteDocumentBranch,
-  postDocumentBranch,
-} from '../apis/documentTree.api.js'
 import Component from '../core/Component.js'
 import { hashRouter } from '../router/hashRouter.js'
 import { documentTreeStore } from '../store/documentTree.store.js'
@@ -24,6 +20,13 @@ export default class DocumentBranchComponent extends Component {
     documentTreeStore.subscribe(this.render.bind(this))
   }
 
+  render() {
+    const $branchContainer = document.createElement('li')
+    $branchContainer.id = this.state.id
+    $branchContainer.innerHTML = this.template()
+    this.$target.appendChild($branchContainer)
+  }
+
   mounted() {
     const { id } = this.state
     const addDocument = documentTreeStore.getState('addDocument')
@@ -36,12 +39,5 @@ export default class DocumentBranchComponent extends Component {
     this.setEvent('click', '.deleteDocumentButton', async () => {
       deleteDocument({ id })
     })
-  }
-
-  render() {
-    const $li = document.createElement('li')
-    $li.id = this.state.id
-    $li.innerHTML = this.template()
-    this.$target.appendChild($li)
   }
 }

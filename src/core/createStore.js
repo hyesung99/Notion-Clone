@@ -1,12 +1,11 @@
 export function createStore(initialState = {}) {
   let state = initialState
-  let listeners = new Set()
+  let listeners = []
 
   const setState = (partial, replace) => {
     const nextState = typeof partial === 'function' ? partial(state) : partial
     if (nextState !== state) {
       state = replace ? nextState : Object.assign({}, state, nextState)
-      console.log(listeners)
       listeners.forEach((listener) => listener(state))
     }
   }
@@ -16,7 +15,7 @@ export function createStore(initialState = {}) {
   }
 
   const subscribe = (listener) => {
-    listeners.add(listener)
+    listeners.push(listener)
     return () => listeners.delete(listener)
   }
 

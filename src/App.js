@@ -20,7 +20,6 @@ export default class App extends Component {
       component: DocumentTreeComponent,
       componentOptions: {
         $target: $documentTree,
-        initialState: await getDocumentTree(),
       },
     })
 

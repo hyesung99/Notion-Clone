@@ -1,6 +1,4 @@
-import { postDocumentBranch } from '../apis/documentTree.api.js'
 import Component from '../core/Component.js'
-import { DocumentTreeBranch } from '../domain/index.js'
 import { documentTreeStore } from '../store/documentTree.store.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
@@ -15,6 +13,7 @@ export default class DocumentTreeComponent extends Component {
 
   created() {
     documentTreeStore.subscribe(this.render.bind(this))
+    this.state = documentTreeStore.getState('documents')
   }
 
   render() {
@@ -23,9 +22,9 @@ export default class DocumentTreeComponent extends Component {
     console.log(documentTree)
     const $rootUl = this.$target.querySelector('.rootUl')
     documentTree.forEach((doc) => {
-      this.createDocumentBranch({
+      return new DocumentTreeBranchComponent({
         $target: $rootUl,
-        doc,
+        initialState: doc,
       })
     })
   }

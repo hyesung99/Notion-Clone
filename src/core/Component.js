@@ -1,5 +1,3 @@
-import { createStore } from './createStore.js'
-
 export default class Component {
   $target
   state

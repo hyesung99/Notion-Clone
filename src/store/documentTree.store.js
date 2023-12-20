@@ -1,23 +1,31 @@
 import {
   deleteDocumentBranch,
+  getDocumentTree,
   postDocumentBranch,
 } from '../apis/documentTree.api.js'
 import { createStore } from '../core/createStore.js'
 
-const documentTreeStore = createStore()
+const documentTreeStore = createStore({
+  documents: [],
+  addDocument: null,
+  deleteDocument: null,
+})
 
 documentTreeStore.setState({
-  documents: [],
+  documents: await getDocumentTree(),
   addDocument: async ({ title, parentId }) => {
-    const newState = await postDocumentBranch({ title, parentId })
+    await postDocumentBranch({ title, parentId })
     documentTreeStore.setState({
       ...documentTreeStore.getState(),
-      documents: [...documentTreeStore.getState().documents, newState],
+      documents: await getDocumentTree(),
     })
   },
   deleteDocument: async ({ id }) => {
-    const newState = await deleteDocumentBranch({ id })
-    documentTreeStore.setState(newState)
+    await deleteDocumentBranch({ id })
+    documentTreeStore.setState({
+      ...documentTreeStore.getState(),
+      documents: await getDocumentTree(),
+    })
   },
 })
 
