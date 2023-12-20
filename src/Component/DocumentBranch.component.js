@@ -4,6 +4,7 @@ import {
 } from '../apis/documentTree.api.js'
 import Component from '../core/Component.js'
 import { hashRouter } from '../router/hashRouter.js'
+import { documentTreeStore } from '../store/documentTree.store.js'
 
 export default class DocumentBranchComponent extends Component {
   template() {
@@ -19,15 +20,21 @@ export default class DocumentBranchComponent extends Component {
     `
   }
 
+  created() {
+    documentTreeStore.subscribe(this.render.bind(this))
+  }
+
   mounted() {
     const { id } = this.state
+    const addDocument = documentTreeStore.getState('addDocument')
+    const deleteDocument = documentTreeStore.getState('deleteDocument')
 
     this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
-    this.setEvent('click', '.addDocumentButton', async () => {
-      await postDocumentBranch({ title: '제목없음', parentId: id })
-    })
+    this.setEvent('click', '.addDocumentButton', async () =>
+      addDocument({ title: '제목없음', parentId: id })
+    )
     this.setEvent('click', '.deleteDocumentButton', async () => {
-      await deleteDocumentBranch({ id })
+      deleteDocument({ id })
     })
   }
 

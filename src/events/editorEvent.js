@@ -2,38 +2,37 @@ import {
   saveDocumentToServer,
   saveDocumentToStorage,
   cloneDomain,
-  getDocumentTree,
-} from "../service/index.js";
+} from '../service/index.js'
 
-let timeout;
+let timeout
 
 export const textareaFocusoutEvent = async ({ editor, content }) => {
   editor.state = cloneDomain({
     domain: editor.state,
     newPropertie: { content },
-  });
+  })
 
   if (editor.state.id !== -1) {
-    saveDocumentToServer({ content });
+    saveDocumentToServer({ content })
   }
-};
+}
 
 export const textareaKeyupEvent = ({ title, content }) => {
-  clearTimeout(timeout);
+  clearTimeout(timeout)
   timeout = setTimeout(() => {
-    saveDocumentToStorage({ title, content });
-  }, 200);
-};
+    saveDocumentToStorage({ title, content })
+  }, 200)
+}
 
 export const titleKeyupEvent = ({ title, content }) => {
-  clearTimeout(timeout);
+  clearTimeout(timeout)
   timeout = setTimeout(() => {
-    saveDocumentToStorage({ title, content });
-  }, 200);
-};
+    saveDocumentToStorage({ title, content })
+  }, 200)
+}
 
 export const titleFocusoutEvent = async ({ documentTree, editor, title }) => {
-  editor.state = cloneDomain({ domain: editor.state, newPropertie: { title } });
-  await saveDocumentToServer({ title: editor.state.title });
-  documentTree.state = await getDocumentTree();
-};
+  editor.state = cloneDomain({ domain: editor.state, newPropertie: { title } })
+  await saveDocumentToServer({ title: editor.state.title })
+  documentTree.state = await getDocumentTree()
+}

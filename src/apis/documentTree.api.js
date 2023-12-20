@@ -7,10 +7,9 @@ export const getDocumentTree = async () => {
 }
 
 export const postDocumentBranch = async ({ title, parentId }) => {
-  console.log(title, parentId, END_POINTS.DOCUMENT_TREE)
   const data = await NotionFetchClient.post(END_POINTS.DOCUMENT_TREE, {
     title,
-    parentId,
+    parent: parentId,
   })
   return data
 }

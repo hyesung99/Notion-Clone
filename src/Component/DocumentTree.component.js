@@ -1,5 +1,7 @@
+import { postDocumentBranch } from '../apis/documentTree.api.js'
 import Component from '../core/Component.js'
 import { DocumentTreeBranch } from '../domain/index.js'
+import { documentTreeStore } from '../store/documentTree.store.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -7,13 +9,18 @@ export default class DocumentTreeComponent extends Component {
     return `
     <ul class="rootUl">
     </ul>
-    <button class="addRootDocumentButton addDocumentButton">+</button>
+    <button id='addRootDocumentButton' class="addDocumentButton">+</button>
     `
+  }
+
+  created() {
+    documentTreeStore.subscribe(this.render.bind(this))
   }
 
   render() {
     this.$target.innerHTML = this.template()
-    const { documentTree } = this.state
+    const documentTree = documentTreeStore.getState('documents')
+    console.log(documentTree)
     const $rootUl = this.$target.querySelector('.rootUl')
     documentTree.forEach((doc) => {
       this.createDocumentBranch({
@@ -21,6 +28,16 @@ export default class DocumentTreeComponent extends Component {
         doc,
       })
     })
+  }
+
+  mounted() {
+    const addDocument = documentTreeStore.getState('addDocument')
+    this.setEvent('click', '#addRootDocumentButton', () =>
+      addDocument({
+        title: '제목없음',
+        parentId: null,
+      })
+    )
   }
 
   createDocumentBranch({ $target, doc }) {
@@ -32,7 +49,7 @@ export default class DocumentTreeComponent extends Component {
       },
     })
 
-    if (doc.documents.length > 0) {
+    if (doc.documents && doc.documents.length > 0) {
       const $ul = document.createElement('ul')
       $target.appendChild($ul)
       doc.documents.forEach((childDoc) => {
