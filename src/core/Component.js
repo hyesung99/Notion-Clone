@@ -21,9 +21,9 @@ export default class Component {
 
   setEvent(action, selector, callback) {
     this.$target.addEventListener(action, (event) => {
-      if (event.target.closest(`${selector}`)) {
-        event.stopPropagation()
+      if (event.target.closest(selector)) {
         callback(event)
+        event.stopPropagation()
       }
     })
   }

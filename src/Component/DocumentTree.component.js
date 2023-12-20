@@ -18,12 +18,15 @@ export default class DocumentTreeComponent extends Component {
 
   render() {
     this.$target.innerHTML = this.template()
-    const documentTree = documentTreeStore.getState('documents')
-    console.log(documentTree)
     const $rootUl = this.$target.querySelector('.rootUl')
+    const documentTree = documentTreeStore.getState('documents')
+
     documentTree.forEach((doc) => {
+      const $documentBranchLi = document.createElement('li')
+      $documentBranchLi.classList.add('documentLi')
+      $rootUl.appendChild($documentBranchLi)
       return new DocumentTreeBranchComponent({
-        $target: $rootUl,
+        $target: $documentBranchLi,
         initialState: doc,
       })
     })
