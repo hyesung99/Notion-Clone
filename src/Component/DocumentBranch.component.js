@@ -6,13 +6,11 @@ export default class DocumentBranchComponent extends Component {
   template() {
     const { title, id } = this.state
     return `
-      <span class="documentLiContainer">
-        <a class="documentLink">${title}</a>
-        <span class="documentTreeButtonContainer">
-          <button class="addDocumentButton" data-id="${id}">+</button>
-          <button class="deleteDocumentButton" data-id="${id}">x</button>
-        </span>
-      </span> 
+      <a class="documentLink">${title}</a>
+      <span class="documentTreeButtonContainer">
+        <button class="addDocumentButton" data-id="${id}">+</button>
+        <button class="deleteDocumentButton" data-id="${id}">x</button>
+      </span>
     `
   }
 
@@ -21,10 +19,19 @@ export default class DocumentBranchComponent extends Component {
   }
 
   render() {
+    const { id: branchId, documents } = this.state
     const $branchContainer = document.createElement('li')
-    $branchContainer.id = this.state.id
+    $branchContainer.classList.add('documentLi')
+    $branchContainer.id = branchId
     $branchContainer.innerHTML = this.template()
     this.$target.appendChild($branchContainer)
+
+    documents.forEach((doc) => {
+      new DocumentBranchComponent({
+        $target: $branchContainer,
+        initialState: doc,
+      })
+    })
   }
 
   mounted() {
