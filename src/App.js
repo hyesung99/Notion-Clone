@@ -1,7 +1,5 @@
 import Component from './core/Component.js'
 import { DocumentTreeComponent, EditorComponent } from './Component/index.js'
-// import { getRecentDocument } from './service/documentService.js'
-import { getDocumentTree } from './apis/documentTree.api.js'
 
 export default class App extends Component {
   template() {
