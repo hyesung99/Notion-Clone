@@ -42,17 +42,23 @@ ul {
   padding: 0;
 }
 
-.documentLiContainer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.documentLi {
   width: 100%;
-  height: 30px;
-  padding: 5px;
-  border-radius: 10px;
 }
 
-.documentLiContainer:hover {
+.documentLi > li:nth-child(n) {
+  padding-left: 10px;
+}
+
+.documentBranchContainer {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  align-items: center;
+}
+
+.documentBranchContainer:hover {
+  border-radius: 10px;
   background-color: #c4d7b2;
 }
 

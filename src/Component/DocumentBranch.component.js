@@ -6,11 +6,13 @@ export default class DocumentBranchComponent extends Component {
   template() {
     const { title, id } = this.state
     return `
+    <div class='documentBranchContainer'>
       <a class="documentLink">${title}</a>
       <span class="documentTreeButtonContainer">
-        <button class="addDocumentButton" data-id="${id}">+</button>
-        <button class="deleteDocumentButton" data-id="${id}">x</button>
+      <button class="addDocumentButton" data-id="${id}">+</button>
+      <button class="deleteDocumentButton" data-id="${id}">x</button>
       </span>
+    </div>
     `
   }
 
