@@ -5,15 +5,12 @@ export default class Component {
   state
 
   constructor(componentOptions) {
-    this.created()
     const { $target, initialState, props } = componentOptions
+    this.created()
     this.$target = $target
     this.state = initialState
     this.props = props || {}
     this.render()
-    if (props && props.events) {
-      this.setEvent(props.events)
-    }
     this.mounted()
   }
 
@@ -21,27 +18,28 @@ export default class Component {
     return ''
   }
   created() {}
-  setEvent(events) {
-    events.forEach((event) => this.setEventDelegation(event))
+
+  setEvent(action, selector, callback) {
+    this.$target.addEventListener(action, (event) => {
+      if (event.target.closest(selector)) {
+        callback(event)
+        event.stopPropagation()
+      }
+    })
   }
+
   setState(nextState) {
     this.state = nextState
     this.render()
   }
+
   render() {
     this.$target.innerHTML = this.template()
   }
 
-  setEventDelegation({ action, tag, target, callback }) {
-    this.$target.addEventListener(action, (event) => {
-      if (event.target.closest(`${tag}`)) {
-        callback({ event, target: event.target.closest(target) })
-      }
-    })
-  }
   mounted() {}
 
   createChildComponent({ component, componentOptions }) {
-    return new component(componentOptions)
+    new component(componentOptions)
   }
 }

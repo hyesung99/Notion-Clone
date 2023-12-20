@@ -24,8 +24,7 @@ class FetchClient {
       method: 'POST',
       body: JSON.stringify(data),
     })
-
-    return JSON.parse(response)
+    return response.json()
   }
 
   async put(url, data, option = {}) {
@@ -36,7 +35,7 @@ class FetchClient {
       body: JSON.stringify(data),
     })
 
-    return JSON.parse(response)
+    return response.json()
   }
 
   async delete(url, option = {}) {
@@ -46,7 +45,7 @@ class FetchClient {
       method: 'DELETE',
     })
 
-    return JSON.parse(response)
+    return response
   }
 }
 

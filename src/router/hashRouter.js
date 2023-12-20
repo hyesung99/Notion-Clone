@@ -1,37 +1,36 @@
 function createHashRouter() {
-  const callbacks = [];
+  const callbacks = []
 
   function observe(callback) {
-    callbacks.push(callback);
+    callbacks.push(callback)
   }
 
   function notify() {
+    console.log('notify')
     if (callbacks.length > 0) {
-      callbacks.forEach((callback) => callback());
+      callbacks.forEach((callback) => callback())
     }
   }
-  function push(path) {
-    window.location.hash = path;
+  function navigate(path) {
+    history.pushState(null, '', path)
   }
 
   function getUrl() {
-    return location.hash.replace("#", "");
+    return location.hash.replace('#', '')
   }
 
   function init() {
-    window.addEventListener("hashchange", notify);
+    window.addEventListener('popstate', notify)
   }
 
-  init();
+  init()
 
   return {
     observe,
     notify,
-    push,
-    get url() {
-      return getUrl();
-    },
-  };
+    navigate,
+    getUrl,
+  }
 }
 
-export const hashRouter = createHashRouter();
+export const hashRouter = createHashRouter()
