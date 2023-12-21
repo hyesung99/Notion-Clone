@@ -4,13 +4,14 @@ import { documentTreeStore } from '../store/documentTree.store.js'
 
 export default class DocumentBranchComponent extends Component {
   template() {
-    const { title, id } = this.state
+    const { documentInfo } = this.state
     return `
       <div class='documentBranchContainer'>
-        <a class="documentLink">${title}</a>
+        <button class="documentOpenButton">▶</button>
+        <a class="documentLink">${documentInfo.title}</a>
         <span class="documentTreeButtonContainer">
-        <button class="addDocumentButton" data-id="${id}">+</button>
-        <button class="deleteDocumentButton" data-id="${id}">x</button>
+        <button class="addDocumentButton">+</button>
+        <button class="deleteDocumentButton">x</button>
         </span>
       </div>
     `
@@ -21,31 +22,41 @@ export default class DocumentBranchComponent extends Component {
   }
 
   render() {
-    const { documents } = this.state
+    const { documentInfo, isOpen } = this.state
     this.$target.innerHTML = this.template()
 
-    documents.forEach((doc) => {
+    documentInfo.documents.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
       this.$target.appendChild($documentBranchLi)
-      new DocumentBranchComponent({
-        $target: $documentBranchLi,
-        initialState: doc,
-      })
+      if (isOpen) {
+        new DocumentBranchComponent({
+          $target: $documentBranchLi,
+          initialState: { isOpen: false, documentInfo },
+        })
+      }
     })
   }
 
   mounted() {
-    const { id } = this.state
+    const { id } = this.state.documentInfo
     const addDocument = documentTreeStore.getState('addDocument')
     const deleteDocument = documentTreeStore.getState('deleteDocument')
 
-    // this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
+    this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
     this.setEvent('click', '.addDocumentButton', async () =>
       addDocument({ title: '제목없음', parentId: id })
     )
     this.setEvent('click', '.deleteDocumentButton', async () => {
       deleteDocument({ id })
+    })
+    this.setEvent('click', '.documentOpenButton', () => {
+      console.log(this.state.isOpen)
+      this.setState(
+        Object.assign(this.state, {
+          isOpen: !this.state.isOpen,
+        })
+      )
     })
   }
 }

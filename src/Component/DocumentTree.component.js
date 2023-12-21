@@ -13,7 +13,6 @@ export default class DocumentTreeComponent extends Component {
 
   created() {
     documentTreeStore.subscribe(this.render.bind(this))
-    this.state = documentTreeStore.getState('documents')
   }
 
   render() {
@@ -21,13 +20,13 @@ export default class DocumentTreeComponent extends Component {
     const $rootUl = this.$target.querySelector('.rootUl')
     const documentTree = documentTreeStore.getState('documents')
 
-    documentTree.forEach((doc) => {
+    documentTree.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
       $rootUl.appendChild($documentBranchLi)
       return new DocumentTreeBranchComponent({
         $target: $documentBranchLi,
-        initialState: doc,
+        initialState: { isOpen: false, documentInfo },
       })
     })
   }

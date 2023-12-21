@@ -71,6 +71,7 @@ ul {
   font-size: 18px;
   text-overflow: ellipsis;
   overflow: hidden;
+  cursor: pointer;
 }
 
 .documentTreeButtonContainer {
