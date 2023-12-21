@@ -6,10 +6,10 @@ export default class Component {
 
   constructor(componentOptions) {
     const { $target, initialState, props } = componentOptions
-    this.created()
     this.$target = $target
-    this.state = initialState
-    this.props = props || {}
+    this.state = initialState ?? {}
+    this.props = props ?? {}
+    this.created()
     this.render()
     this.mounted()
   }
