@@ -1,6 +1,7 @@
 import Component from '../core/Component.js'
 import { hashRouter } from '../router/hashRouter.js'
 import { documentTreeStore } from '../store/documentTree.store.js'
+import DocumentEmptyBranch from './DocumentEmptyBranch.component.js'
 
 export default class DocumentBranchComponent extends Component {
   template() {
@@ -10,10 +11,11 @@ export default class DocumentBranchComponent extends Component {
         <button class="documentOpenButton">▶</button>
         <a class="documentLink">${documentInfo.title}</a>
         <span class="documentTreeButtonContainer">
-        <button class="addDocumentButton">+</button>
-        <button class="deleteDocumentButton">x</button>
+          <button class="addDocumentButton">+</button>
+          <button class="deleteDocumentButton">x</button>
         </span>
       </div>
+      <li class='documentLi branch-${documentInfo.id}'></li>
     `
   }
 
@@ -24,17 +26,23 @@ export default class DocumentBranchComponent extends Component {
   render() {
     const { documentInfo, isOpen } = this.state
     this.$target.innerHTML = this.template()
+    const $documentBranchLi = document.querySelector(
+      `.branch-${documentInfo.id}`
+    )
+
+    if (!isOpen) return
+
+    if (documentInfo.documents.length === 0) {
+      new DocumentEmptyBranch({
+        $target: $documentBranchLi,
+      })
+    }
 
     documentInfo.documents.forEach((documentInfo) => {
-      const $documentBranchLi = document.createElement('li')
-      $documentBranchLi.classList.add('documentLi')
-      this.$target.appendChild($documentBranchLi)
-      if (isOpen) {
-        new DocumentBranchComponent({
-          $target: $documentBranchLi,
-          initialState: { isOpen: false, documentInfo },
-        })
-      }
+      new DocumentBranchComponent({
+        $target: $documentBranchLi,
+        initialState: { isOpen: false, documentInfo },
+      })
     })
   }
 
@@ -51,7 +59,6 @@ export default class DocumentBranchComponent extends Component {
       deleteDocument({ id })
     })
     this.setEvent('click', '.documentOpenButton', () => {
-      console.log(this.state.isOpen)
       this.setState(
         Object.assign(this.state, {
           isOpen: !this.state.isOpen,
