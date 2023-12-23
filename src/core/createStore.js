@@ -1,12 +1,12 @@
-export function createStore(initialState = {}) {
-  let state = initialState
+import { rootReducer } from './reducer'
+
+export function createStore() {
+  let state
   const listeners = []
 
-  const setState = (nextState) => {
-    if (nextState !== state) {
-      state = Object.assign({}, state, nextState)
-      notify()
-    }
+  const dispatch = (action) => {
+    state = reducer(action, state)
+    notify()
   }
 
   const notify = () => {
@@ -23,8 +23,10 @@ export function createStore(initialState = {}) {
   }
 
   return {
-    setState,
+    dispatch,
     getState,
     subscribe,
   }
 }
+
+export const store = createStore(rootReducer)
