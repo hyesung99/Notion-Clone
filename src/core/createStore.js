@@ -2,10 +2,9 @@ export function createStore(initialState = {}) {
   let state = initialState
   const listeners = []
 
-  const setState = (partial, replace) => {
-    const nextState = typeof partial === 'function' ? partial(state) : partial
+  const setState = (nextState) => {
     if (nextState !== state) {
-      state = replace ? nextState : Object.assign({}, state, nextState)
+      state = Object.assign({}, state, nextState)
       notify()
     }
   }
