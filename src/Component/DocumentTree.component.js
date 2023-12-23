@@ -1,5 +1,5 @@
 import Component from '../core/Component.js'
-import { documentTreeStore } from '../store/documentTree.store.js'
+import { store } from '../core/createStore.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -12,13 +12,13 @@ export default class DocumentTreeComponent extends Component {
   }
 
   created() {
-    documentTreeStore.subscribe(this.render.bind(this))
+    store.subscribe(this.render.bind(this))
   }
 
   render() {
     this.$target.innerHTML = this.template()
     const $rootUl = this.$target.querySelector('.rootUl')
-    const documentTree = documentTreeStore.getState('documents')
+    const documentTree = store.getState('documentTree')
 
     documentTree.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')

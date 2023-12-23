@@ -1,6 +1,6 @@
-import { rootReducer } from './reducer'
+import { rootReducer } from './reducer.js'
 
-export function createStore() {
+export function createStore(reducer) {
   let state
   const listeners = []
 
@@ -21,6 +21,8 @@ export function createStore() {
     listeners.push(listener)
     return () => listeners.delete(listener)
   }
+
+  dispatch(state, {})
 
   return {
     dispatch,

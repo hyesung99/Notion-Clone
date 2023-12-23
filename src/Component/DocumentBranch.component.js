@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
+import { store } from '../core/createStore.js'
 import { hashRouter } from '../router/hashRouter.js'
-import { documentTreeStore } from '../store/documentTree.store.js'
 import DocumentEmptyBranch from './DocumentEmptyBranch.component.js'
 
 export default class DocumentBranchComponent extends Component {
@@ -20,7 +20,7 @@ export default class DocumentBranchComponent extends Component {
   }
 
   created() {
-    documentTreeStore.subscribe(this.render.bind(this))
+    store.subscribe(this.render.bind(this))
   }
 
   render() {
@@ -48,16 +48,31 @@ export default class DocumentBranchComponent extends Component {
 
   mounted() {
     const { id } = this.state.documentInfo
-    const addDocument = documentTreeStore.getState('addDocument')
-    const deleteDocument = documentTreeStore.getState('deleteDocument')
+    // const addDocument = documentTreeStore.getState('addDocument')
+    // const deleteDocument = documentTreeStore.getState('deleteDocument')
 
     this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
-    this.setEvent('click', '.addDocumentButton', async () =>
-      addDocument({ title: '제목없음', parentId: id })
+    this.setEvent(
+      'click',
+      '.addDocumentButton',
+      store.dispatch({
+        type: 'ADD_DOCUMENT',
+        payload: {
+          title: '제목없음',
+          parentId: id,
+        },
+      })
+      // addDocument({ title: '제목없음', parentId: id })
     )
-    this.setEvent('click', '.deleteDocumentButton', async () => {
-      deleteDocument({ id })
-    })
+    this.setEvent(
+      'click',
+      '.deleteDocumentButton',
+      store.dispatch({
+        type: 'DELETE_DOCUMENT',
+        payload: { id },
+      })
+      // deleteDocument({ id })
+    )
     this.setEvent('click', '.documentOpenButton', () => {
       this.setState(
         Object.assign(this.state, {
