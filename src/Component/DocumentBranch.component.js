@@ -15,7 +15,7 @@ export default class DocumentBranchComponent extends Component {
           <button class="deleteDocumentButton">x</button>
         </span>
       </div>
-      <li class='documentLi branch-${documentInfo.id}'></li>
+      <li class='documentLi branch-of-${documentInfo.id}'></li>
     `
   }
 
@@ -27,7 +27,7 @@ export default class DocumentBranchComponent extends Component {
     const { documentInfo, isOpen } = this.state
     this.$target.innerHTML = this.template()
     const $documentBranchLi = document.querySelector(
-      `.branch-${documentInfo.id}`
+      `.branch-of-${documentInfo.id}`
     )
 
     if (!isOpen) return
@@ -36,14 +36,14 @@ export default class DocumentBranchComponent extends Component {
       new DocumentEmptyBranch({
         $target: $documentBranchLi,
       })
-    }
-
-    documentInfo.documents.forEach((documentInfo) => {
-      new DocumentBranchComponent({
-        $target: $documentBranchLi,
-        initialState: { isOpen: false, documentInfo },
+    } else {
+      documentInfo.documents.forEach((documentInfo) => {
+        new DocumentBranchComponent({
+          $target: $documentBranchLi,
+          initialState: { isOpen: false, documentInfo },
+        })
       })
-    })
+    }
   }
 
   mounted() {
