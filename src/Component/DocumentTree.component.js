@@ -14,10 +14,7 @@ export default class DocumentTreeComponent extends Component {
 
   created() {
     store.subscribe(this.render.bind(this))
-    store.dispatch({
-      action: 'SET_DOCUMENT_TREE',
-      payload: async () => await getDocumentTree(),
-    })
+    store.dispatch(setDocumentTreeThunk())
   }
 
   render() {
@@ -38,7 +35,11 @@ export default class DocumentTreeComponent extends Component {
 
   mounted() {
     this.setEvent('click', '#addRootDocumentButton', () =>
-      store.dispatch(setDocumentTreeThunk())
+      store.dispatch({
+        action: 'ADD_DOCUMENT',
+        payload: async ({ title, parentId }) =>
+          await postDocumentBranch({ title, parentId }),
+      })
     )
   }
 
