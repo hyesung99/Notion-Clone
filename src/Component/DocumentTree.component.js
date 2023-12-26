@@ -13,6 +13,10 @@ export default class DocumentTreeComponent extends Component {
 
   created() {
     store.subscribe(this.render.bind(this))
+    store.dispatch({
+      action: 'SET_DOCUMENT_TREE',
+      payload: async () => await getDocumentTree(),
+    })
   }
 
   render() {
@@ -20,7 +24,7 @@ export default class DocumentTreeComponent extends Component {
     const $rootUl = this.$target.querySelector('.rootUl')
     const documentTree = store.getState('documentTree')
 
-    documentTree.forEach((documentInfo) => {
+    documentTree.documents.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
       $rootUl.appendChild($documentBranchLi)
@@ -32,11 +36,11 @@ export default class DocumentTreeComponent extends Component {
   }
 
   mounted() {
-    const addDocument = documentTreeStore.getState('addDocument')
     this.setEvent('click', '#addRootDocumentButton', () =>
-      addDocument({
-        title: '제목없음',
-        parentId: null,
+      store.dispatch({
+        action: 'ADD_DOCUMENT',
+        payload: async ({ title, parentId }) =>
+          await postDocumentBranch({ title, parentId }),
       })
     )
   }
