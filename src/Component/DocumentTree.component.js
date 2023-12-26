@@ -1,5 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
+import { setDocumentTreeThunk } from '../core/reducer.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -37,11 +38,7 @@ export default class DocumentTreeComponent extends Component {
 
   mounted() {
     this.setEvent('click', '#addRootDocumentButton', () =>
-      store.dispatch({
-        action: 'ADD_DOCUMENT',
-        payload: async ({ title, parentId }) =>
-          await postDocumentBranch({ title, parentId }),
-      })
+      store.dispatch(setDocumentTreeThunk())
     )
   }
 
