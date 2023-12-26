@@ -1,6 +1,8 @@
 // Ducks pattern:
 // Ducks is a modular pattern that collocates actions, action types, thunks and reducers.
 
+import { getDocumentTree } from '../apis/documentTree.api.js'
+
 export const rootReducer = (state = {}, action = {}) => {
   return {
     documentTree: documentTreeReducer(state.documentTree, action),
@@ -8,7 +10,7 @@ export const rootReducer = (state = {}, action = {}) => {
   }
 }
 
-export const setDocumentTreeThunk = async (dispatch) => {
+export const setDocumentTreeThunk = () => async (dispatch) => {
   const documents = await getDocumentTree()
   dispatch({
     type: 'SET_DOCUMENT_TREE',
@@ -21,12 +23,12 @@ export const documentTreeReducer = (state = { documents: [] }, action) => {
     case 'ADD_DOCUMENT':
       return {
         ...state,
-        documents: [...state.documentTree, action.payload],
+        documents: [...state.documents, action.payload],
       }
     case 'DELETE_DOCUMENT':
       return {
         ...state,
-        documents: state.documentTree.filter(
+        documents: state.documents.filter(
           (document) => document.id !== action.payload.id
         ),
       }
