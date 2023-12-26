@@ -48,13 +48,9 @@ export default class DocumentBranchComponent extends Component {
 
   mounted() {
     const { id } = this.state.documentInfo
-    // const addDocument = documentTreeStore.getState('addDocument')
-    // const deleteDocument = documentTreeStore.getState('deleteDocument')
 
     this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
-    this.setEvent(
-      'click',
-      '.addDocumentButton',
+    this.setEvent('click', '.addDocumentButton', () =>
       store.dispatch({
         type: 'ADD_DOCUMENT',
         payload: {
@@ -62,16 +58,12 @@ export default class DocumentBranchComponent extends Component {
           parentId: id,
         },
       })
-      // addDocument({ title: '제목없음', parentId: id })
     )
-    this.setEvent(
-      'click',
-      '.deleteDocumentButton',
+    this.setEvent('click', '.deleteDocumentButton', () =>
       store.dispatch({
         type: 'DELETE_DOCUMENT',
         payload: { id },
       })
-      // deleteDocument({ id })
     )
     this.setEvent('click', '.documentOpenButton', () => {
       this.setState(

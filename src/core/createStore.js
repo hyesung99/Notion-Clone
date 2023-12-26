@@ -5,7 +5,11 @@ export function createStore(reducer) {
   const listeners = []
 
   const dispatch = (action) => {
-    state = reducer(action, state)
+    //thunk 처리
+    if (typeof action === 'function') {
+      return action(dispatch, getState)
+    }
+    state = reducer(state, action)
     notify()
   }
 
