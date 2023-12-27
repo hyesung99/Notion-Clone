@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { addDocumentThunk, setDocumentTreeThunk } from '../core/reducer.js'
+import { addBranchThunk, setDocumentTreeThunk } from '../core/reducer.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -35,7 +35,7 @@ export default class DocumentTreeComponent extends Component {
 
   mounted() {
     this.setEvent('click', '#addRootDocumentButton', () =>
-      store.dispatch(addDocumentThunk({ title: '제목없음', parentId: null }))
+      store.dispatch(addBranchThunk({ title: '제목없음', parentId: null }))
     )
   }
 

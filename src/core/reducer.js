@@ -22,14 +22,14 @@ export const setDocumentTreeThunk = () => async (dispatch) => {
   })
 }
 
-export const addDocumentThunk =
+export const addBranchThunk =
   ({ title, parentId }) =>
   async (dispatch) => {
-    postDocumentBranch({ title, parentId })
+    await postDocumentBranch({ title, parentId })
     dispatch(setDocumentTreeThunk())
   }
 
-export const deleteDocumentThunk =
+export const deleteBranchThunk =
   ({ id }) =>
   async (dispatch) => {
     await deleteDocumentBranch({ id })

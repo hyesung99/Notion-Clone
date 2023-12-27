@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { addDocumentThunk, deleteDocumentThunk } from '../core/reducer.js'
+import { addBranchThunk, deleteBranchThunk } from '../core/reducer.js'
 import { hashRouter } from '../router/hashRouter.js'
 import DocumentEmptyBranch from './DocumentEmptyBranch.component.js'
 
@@ -52,10 +52,10 @@ export default class DocumentBranchComponent extends Component {
 
     this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
     this.setEvent('click', '.addDocumentButton', () =>
-      store.dispatch(addDocumentThunk({ title: '제목없음', parentId: id }))
+      store.dispatch(addBranchThunk({ title: '제목없음', parentId: id }))
     )
     this.setEvent('click', '.deleteDocumentButton', () =>
-      store.dispatch(deleteDocumentThunk({ id }))
+      store.dispatch(deleteBranchThunk({ id }))
     )
     this.setEvent('click', '.documentOpenButton', () => {
       this.setState(
