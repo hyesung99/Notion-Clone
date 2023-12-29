@@ -27,6 +27,7 @@ export const addBranchThunk =
   async (dispatch) => {
     await postDocumentBranch({ title, parentId })
     dispatch(setDocumentTreeThunk())
+    dispatch(openBranch(parentId))
   }
 
 export const deleteBranchThunk =
@@ -36,12 +37,37 @@ export const deleteBranchThunk =
     dispatch(setDocumentTreeThunk())
   }
 
-export const documentTreeReducer = (state = { documents: [] }, action) => {
+export const openBranch = (id) => ({
+  type: 'OPEN_BRANCH',
+  payload: id,
+})
+
+export const closeBranch = (id) => ({
+  type: 'CLOSE_BRANCH',
+  payload: id,
+})
+
+export const documentTreeReducer = (
+  state = { documents: [], openedBranches: [] },
+  action
+) => {
   switch (action.type) {
     case 'SET_DOCUMENT_TREE':
       return {
         ...state,
         documents: action.payload,
+      }
+    case 'OPEN_BRANCH':
+      return {
+        ...state,
+        openedBranches: [...state.openedBranches, action.payload],
+      }
+    case 'CLOSE_BRANCH':
+      return {
+        ...state,
+        openedBranches: state.openedBranches.filter(
+          (id) => id !== action.payload
+        ),
       }
     default:
       return state
