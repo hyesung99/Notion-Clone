@@ -29,7 +29,7 @@ export default class Component {
   }
 
   setState(nextState) {
-    this.state = nextState
+    this.state = Object.assign({}, this.state, nextState)
     this.render()
   }
 
