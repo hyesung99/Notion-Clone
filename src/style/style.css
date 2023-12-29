@@ -80,6 +80,16 @@ ul {
   align-items: center;
 }
 
+.documentOpenButton {
+  margin: auto;
+  padding-bottom: 2px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  background: none;
+  border: none;
+}
+
 .addDocumentButton,
 .deleteDocumentButton,
 .deleteInputButton {
