@@ -1,6 +1,6 @@
 import { rootReducer } from './reducer.js'
 
-export function createStore(reducer) {
+export const createStore = (reducer) => {
   let state
   const listeners = []
 
