@@ -1,6 +1,8 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { addBranchThunk, setDocumentTreeThunk } from '../core/reducer.js'
+import { addBranchThunk, setDocumentTreeThunk } from '../store/reducer.js'
+import { selectRootDocuments } from '../store/selector.js'
+import useSelector from '../service/useSelector.js'
 import { DocumentTreeBranchComponent } from './index.js'
 
 export default class DocumentTreeComponent extends Component {
@@ -20,9 +22,9 @@ export default class DocumentTreeComponent extends Component {
   render() {
     this.$target.innerHTML = this.template()
     const $rootUl = this.$target.querySelector('.rootUl')
-    const documentTree = store.getState('documentTree')
+    const rootDocuments = useSelector(selectRootDocuments)
 
-    documentTree.documents.forEach((documentInfo) => {
+    rootDocuments.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
       $rootUl.appendChild($documentBranchLi)
