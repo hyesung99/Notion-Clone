@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { addBranchThunk, deleteBranchThunk } from '../core/reducer.js'
+import { addBranchThunk, deleteBranchThunk } from '../store/reducer.js'
 
 export default class DocumentBranchButtons extends Component {
   template() {

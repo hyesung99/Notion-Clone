@@ -1,4 +1,4 @@
-import { rootReducer } from './reducer.js'
+import { rootReducer } from '../store/reducer.js'
 
 export const createStore = (reducer) => {
   let state

@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { closeBranch, openBranch } from '../core/reducer.js'
+import { closeBranch, openBranch } from '../store/reducer.js'
 import { hashRouter } from '../router/hashRouter.js'
 import DocumentBranchButtons from './DocumentBranchButtons.component.js'
 import DocumentEmptyBranch from './DocumentEmptyBranch.component.js'
