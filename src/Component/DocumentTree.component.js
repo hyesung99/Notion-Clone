@@ -3,7 +3,7 @@ import { store } from '../core/createStore.js'
 import { addBranchThunk, setDocumentTreeThunk } from '../store/reducer.js'
 import { selectRootDocuments } from '../store/selector.js'
 import useSelector from '../service/useSelector.js'
-import { DocumentTreeBranchComponent } from './index.js'
+import DocumentBranchComponent from './DocumentBranch.component.js'
 
 export default class DocumentTreeComponent extends Component {
   template() {
@@ -28,9 +28,12 @@ export default class DocumentTreeComponent extends Component {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
       $rootUl.appendChild($documentBranchLi)
-      return new DocumentTreeBranchComponent({
-        $target: $documentBranchLi,
-        initialState: { isOpen: false, documentInfo },
+      this.createChildComponent({
+        component: DocumentBranchComponent,
+        componentOptions: {
+          $target: $documentBranchLi,
+          initialState: { isOpen: false, documentInfo },
+        },
       })
     })
   }
@@ -39,23 +42,5 @@ export default class DocumentTreeComponent extends Component {
     this.setEvent('click', '#addRootDocumentButton', () =>
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: null }))
     )
-  }
-
-  createDocumentBranch({ $target, doc }) {
-    this.createChildComponent({
-      component: DocumentTreeBranchComponent,
-      componentOptions: {
-        $target,
-        initialState: doc,
-      },
-    })
-
-    if (doc.documents && doc.documents.length > 0) {
-      const $ul = document.createElement('ul')
-      $target.appendChild($ul)
-      doc.documents.forEach((childDoc) => {
-        this.createDocumentBranch({ $target: $ul, doc: childDoc })
-      })
-    }
   }
 }
