@@ -9,11 +9,12 @@ export default class DocumentBranchComponent extends Component {
   template() {
     const { documentInfo } = this.state
     return `
-      <div class='documentBranchContainer'>
-        <button class="documentOpenButton">▶</button>
-        <a class="documentLink">${documentInfo.title}</a>
+      <div class='branch-container id='branch-${documentInfo.id}'>
+        <button class="branch-open-button">▶</button>
+        <a class="branch-link">${documentInfo.title}</a>
+        <span class="branch-button-container" id="branch-button-${documentInfo.id}"></span>
       </div>
-      <li class='documentLi branch-of-${documentInfo.id}'></li>
+      <ul class="child-branches" id="branch-of-${documentInfo.id}"></ul>
     `
   }
 
@@ -24,39 +25,47 @@ export default class DocumentBranchComponent extends Component {
   render() {
     const { documentInfo } = this.state
     this.$target.innerHTML = this.template()
-    const $documentBranchLi = document.querySelector(
-      `.branch-of-${documentInfo.id}`
+    const $childBranches = document.querySelector(
+      `#branch-of-${documentInfo.id}`
     )
-    const $documentBranchContainer = document.querySelector(
-      `.documentBranchContainer`
+    const $documentBranchButtonContainer = document.querySelector(
+      `#branch-button-${documentInfo.id}`
     )
 
     const { openedBranches } = store.getState('documentTree')
     const isOpen = openedBranches.some((id) => id === documentInfo.id)
     const isHover = this.state.isHover
 
-    if (isHover) {
-      new DocumentBranchButtons({
-        $target: $documentBranchContainer,
+    this.createChildComponent({
+      component: DocumentBranchButtons,
+      componentOptions: {
+        $target: $documentBranchButtonContainer,
         props: {
           documentInfo,
+          isVisible: isHover,
         },
-      })
-    }
+      },
+    })
 
     if (!isOpen) return
 
     if (documentInfo.documents.length === 0) {
-      new DocumentEmptyBranch({
-        $target: $documentBranchLi,
+      this.createChildComponent({
+        component: DocumentEmptyBranch,
+        componentOptions: {
+          $target: $childBranches,
+        },
       })
     } else {
       documentInfo.documents.forEach((documentInfo) => {
-        new DocumentBranchComponent({
-          $target: $documentBranchLi,
-          initialState: {
-            isOpen,
-            documentInfo,
+        this.createChildComponent({
+          component: DocumentBranchComponent,
+          componentOptions: {
+            $target: $childBranches,
+            props: {
+              isOpen,
+              documentInfo,
+            },
           },
         })
       })
@@ -69,10 +78,12 @@ export default class DocumentBranchComponent extends Component {
     const isOpen = openedBranches.some((branchId) => branchId === id)
 
     this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
-    this.setEvent('mouseover ', '.documentBranchContainer', () => {
+    this.setEvent('mouseenter', `.branch-of-${id}`, () => {
+      console.log('mouse enter')
       this.setState({ isHover: true })
     })
-    this.setEvent('mouseout ', '.documentBranchContainer', () => {
+    this.setEvent('mouseleave', `.branch-of-${id}`, () => {
+      console.log('mouse leave')
       this.setState({ isHover: false })
     })
     this.setEvent('click', '.documentOpenButton', () => {

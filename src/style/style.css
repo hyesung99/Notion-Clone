@@ -42,27 +42,27 @@ ul {
   padding: 0;
 }
 
-.documentLi {
+.child-branches {
   width: 100%;
 }
 
-.documentLi > li:nth-child(n) {
+.child-branches > li:nth-child(n) {
   padding-left: 10px;
 }
 
-.documentBranchContainer {
+.branch-container {
   display: flex;
   width: 100%;
   height: 30px;
   align-items: center;
 }
 
-.documentBranchContainer:hover {
+.branch-container:hover {
   border-radius: 10px;
   background-color: #c4d7b2;
 }
 
-.documentLink {
+.branch-link {
   display: inline-block;
   white-space: nowrap;
   width: 100%;
@@ -74,13 +74,13 @@ ul {
   cursor: pointer;
 }
 
-.documentTreeButtonContainer {
+.branch-button-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.documentOpenButton {
+.branch-open-button {
   margin: auto;
   padding-bottom: 2px;
   text-align: center;
@@ -90,9 +90,8 @@ ul {
   border: none;
 }
 
-.addDocumentButton,
-.deleteDocumentButton,
-.deleteInputButton {
+.add-branch-button,
+.delete-branch-button {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -105,8 +104,8 @@ ul {
   transition: all 0.3s;
 }
 
-.addDocumentButton:hover,
-.deleteDocumentButton:hover {
+.add-branch-button:hover,
+.delete-branch-button:hover {
   cursor: pointer;
   color: #e1ecc8;
 }

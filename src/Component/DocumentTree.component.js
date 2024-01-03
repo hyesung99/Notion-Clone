@@ -8,9 +8,9 @@ import DocumentBranchComponent from './DocumentBranch.component.js'
 export default class DocumentTreeComponent extends Component {
   template() {
     return `
-    <ul class="rootUl">
+    <ul class="root-branches">
     </ul>
-    <button id='addRootDocumentButton' class="addDocumentButton">+</button>
+    <button id='addRootDocumentButton' class="add-branch-button">+</button>
     `
   }
 
@@ -21,13 +21,13 @@ export default class DocumentTreeComponent extends Component {
 
   render() {
     this.$target.innerHTML = this.template()
-    const $rootUl = this.$target.querySelector('.rootUl')
+    const $rootBranch = this.$target.querySelector('.root-branches')
     const rootDocuments = useSelector(selectRootDocuments)
 
     rootDocuments.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
       $documentBranchLi.classList.add('documentLi')
-      $rootUl.appendChild($documentBranchLi)
+      $rootBranch.appendChild($documentBranchLi)
       this.createChildComponent({
         component: DocumentBranchComponent,
         componentOptions: {

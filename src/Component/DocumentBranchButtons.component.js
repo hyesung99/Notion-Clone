@@ -5,15 +5,18 @@ import { addBranchThunk, deleteBranchThunk } from '../store/reducer.js'
 export default class DocumentBranchButtons extends Component {
   template() {
     return `
-      <span class="documentTreeButtonContainer">
-        <button class="addDocumentButton">+</button>
-        <button class="deleteDocumentButton">x</button>
-      </span>
+      <button class="add-branch-button">+</button>
+      <button class="delete-branch-button">x</button>
     `
   }
 
+  render() {
+    const { isVisible } = this.props
+    this.$target.innerHTML = isVisible ? this.template() : ''
+  }
+
   mounted() {
-    const { id } = this.state.documentInfo
+    const { id } = this.props.documentInfo
     this.setEvent('click', '.addDocumentButton', () => {
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: id }))
     })
