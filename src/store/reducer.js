@@ -1,8 +1,9 @@
 import {
   getDocumentTree,
-  postDocumentBranch,
-  deleteDocumentBranch,
-} from '../apis/documentTree.api.js'
+  postDocument,
+  deleteDocument,
+  getDocumentDetail,
+} from '../apis/document.api.js'
 
 export const openBranch = (id) => ({
   type: 'OPEN_BRANCH',
@@ -37,6 +38,18 @@ export const deleteBranchThunk =
     dispatch(setDocumentTreeThunk())
   }
 
+export const setEditorThunk = async (id) => {
+  const documentDetail = await getDocumentDetail({ id })
+  dispatch({
+    type: 'SET_TITLE',
+    payload: documentDetail.title,
+  })
+  dispatch({
+    type: 'SET_CONTENT',
+    payload: documentDetail.content,
+  })
+}
+
 export const rootReducer = (state = {}, action = {}) => {
   return {
     documentTree: documentTreeReducer(state.documentTree, action),
@@ -70,4 +83,23 @@ export const documentTreeReducer = (
       return state
   }
 }
-export const documentEditorReducer = () => {}
+export const documentEditorReducer = (
+  state = {
+    title: '',
+    content: '',
+  },
+  action
+) => {
+  switch (action.type) {
+    case 'SET_TITLE':
+      return {
+        ...state,
+        title: action.payload,
+      }
+    case 'SET_CONTENT':
+      return {
+        ...state,
+        content: action.payload,
+      }
+  }
+}
