@@ -1,4 +1,4 @@
-import createSelector from './createSelector.js'
+import createSelector from '../core/createSelector.js'
 
 const getRootDocuments = (state) => state.documentTree.documents
 
