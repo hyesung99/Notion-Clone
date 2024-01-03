@@ -32,7 +32,7 @@ export default class DocumentTreeComponent extends Component {
         component: DocumentBranchComponent,
         componentOptions: {
           $target: $documentBranchLi,
-          initialState: { isOpen: false, documentInfo },
+          props: { documentInfo },
         },
       })
     })
