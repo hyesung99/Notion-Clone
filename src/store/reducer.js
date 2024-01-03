@@ -45,7 +45,7 @@ export const rootReducer = (state = {}, action = {}) => {
 }
 
 export const documentTreeReducer = (
-  state = { documents: [], openedBranches: [] },
+  state = { documents: [], openedBranches: new Set() },
   action
 ) => {
   switch (action.type) {
@@ -57,14 +57,14 @@ export const documentTreeReducer = (
     case 'OPEN_BRANCH':
       return {
         ...state,
-        openedBranches: [...state.openedBranches, action.payload],
+        openedBranches: state.openedBranches.add(action.payload),
       }
     case 'CLOSE_BRANCH':
+      const newOpenedBranches = new Set(state.openedBranches)
+      newOpenedBranches.delete(action.payload)
       return {
         ...state,
-        openedBranches: state.openedBranches.filter(
-          (id) => id !== action.payload
-        ),
+        openedBranches: newOpenedBranches,
       }
     default:
       return state
