@@ -1,18 +1,18 @@
-// Ducks pattern:
-// Ducks is a modular pattern that collocates actions, action types, thunks and reducers.
-
 import {
-  deleteDocumentBranch,
   getDocumentTree,
   postDocumentBranch,
+  deleteDocumentBranch,
 } from '../apis/documentTree.api.js'
 
-export const rootReducer = (state = {}, action = {}) => {
-  return {
-    documentTree: documentTreeReducer(state.documentTree, action),
-    documentEditor: documentEditorReducer(state.documentEditor, action),
-  }
-}
+export const openBranch = (id) => ({
+  type: 'OPEN_BRANCH',
+  payload: id,
+})
+
+export const closeBranch = (id) => ({
+  type: 'CLOSE_BRANCH',
+  payload: id,
+})
 
 export const setDocumentTreeThunk = () => async (dispatch) => {
   const documents = await getDocumentTree()
@@ -37,15 +37,12 @@ export const deleteBranchThunk =
     dispatch(setDocumentTreeThunk())
   }
 
-export const openBranch = (id) => ({
-  type: 'OPEN_BRANCH',
-  payload: id,
-})
-
-export const closeBranch = (id) => ({
-  type: 'CLOSE_BRANCH',
-  payload: id,
-})
+export const rootReducer = (state = {}, action = {}) => {
+  return {
+    documentTree: documentTreeReducer(state.documentTree, action),
+    documentEditor: documentEditorReducer(state.documentEditor, action),
+  }
+}
 
 export const documentTreeReducer = (
   state = { documents: [], openedBranches: [] },
