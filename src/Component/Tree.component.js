@@ -10,7 +10,7 @@ export default class DocumentTreeComponent extends Component {
     return `
     <ul class="root-branches">
     </ul>
-    <button id='addRootDocumentButton' class="add-branch-button">+</button>
+    <button class="add-branch-button">+</button>
     `
   }
 
@@ -26,7 +26,7 @@ export default class DocumentTreeComponent extends Component {
 
     rootDocuments.forEach((documentInfo) => {
       const $documentBranchLi = document.createElement('li')
-      $documentBranchLi.classList.add('documentLi')
+      $documentBranchLi.classList.add('branch-item')
       $rootBranch.appendChild($documentBranchLi)
       this.createChildComponent({
         component: DocumentBranchComponent,

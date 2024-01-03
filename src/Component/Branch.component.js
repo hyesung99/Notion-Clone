@@ -2,18 +2,18 @@ import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
 import { closeBranch, openBranch } from '../store/reducer.js'
 import { hashRouter } from '../router/hashRouter.js'
-import DocumentBranchButtons from './DocumentBranchButtons.component.js'
-import DocumentEmptyBranch from './DocumentEmptyBranch.component.js'
+import DocumentBranchButtons from './BranchButtons.component.js'
+import DocumentEmptyBranch from './EmptyBranch.component.js'
 
 export default class DocumentBranchComponent extends Component {
   template() {
     const { documentInfo } = this.props
     return `
-      <div class='branch-container id='branch-${documentInfo.id}'>
+      <li class='branch-item id='branch-${documentInfo.id}'>
         <button class="branch-open-button">▶</button>
         <a class="branch-link">${documentInfo.title}</a>
         <span class="branch-button-container" id="branch-button-${documentInfo.id}"></span>
-      </div>
+      </li>
       <ul class="child-branches" id="branch-of-${documentInfo.id}"></ul>
     `
   }
@@ -74,13 +74,11 @@ export default class DocumentBranchComponent extends Component {
     const { openedBranches } = store.getState('documentTree')
     const isOpen = openedBranches.has(id)
 
-    this.setEvent('click', '.documentLink', () => hashRouter.navigate(id))
+    this.setEvent('click', '.branch-link', () => hashRouter.navigate(id))
     this.setEvent('mouseenter', `.branch-of-${id}`, () => {
-      console.log('mouse enter')
       this.setState({ isHover: true })
     })
     this.setEvent('mouseleave', `.branch-of-${id}`, () => {
-      console.log('mouse leave')
       this.setState({ isHover: false })
     })
     this.setEvent('click', '.branch-open-button', () => {
