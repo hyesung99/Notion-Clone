@@ -1,10 +1,16 @@
 export const createHashRouter = (routes) => {
+  const listeners = []
+
   const navigate = (path) => {
     location.hash = path
   }
 
-  const notify = (renderer) => {
-    renderer(getMatchedRoute())
+  const subscribe = (listener) => {
+    listeners.push(listener)
+  }
+
+  const notify = () => {
+    listeners.forEach((listener) => listener(getMatchedRoute()))
   }
 
   const getHash = () => {
@@ -17,17 +23,17 @@ export const createHashRouter = (routes) => {
       const pattern = new RegExp(`^${routePattern}$`)
       return pattern.test(hash)
     })
-    console.log(matchedRoute)
     if (!matchedRoute) {
       throw new Error('경로에 맞는 페이지가 없습니다.')
     }
-    return matchedRoute
+    return routes[matchedRoute]
   }
 
-  window.addEventListener('popstate', notify)
+  window.addEventListener('popstate', () => notify())
 
   return {
     notify,
+    subscribe,
     navigate,
     getHash,
   }
