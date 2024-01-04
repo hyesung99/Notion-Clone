@@ -74,7 +74,9 @@ export default class DocumentBranchComponent extends Component {
     const { openedBranches } = store.getState('documentTree')
     const isOpen = openedBranches.has(id)
 
-    this.setEvent('click', '.branch-link', () => hashRouter.navigate(id))
+    this.setEvent('click', '.branch-link', () =>
+      hashRouter.navigate(`/detail/${id}`)
+    )
     this.setEvent('mouseenter', `.branch-of-${id}`, () => {
       this.setState({ isHover: true })
     })
