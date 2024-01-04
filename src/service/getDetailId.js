@@ -1,3 +1,5 @@
-export const getDetailId = (hash) => {
-  return hash.split('/').pop()
+import { hashRouter } from '../router/hashRouter.js'
+
+export const getDetailId = () => {
+  return hashRouter.getHash().split('/').pop()
 }
