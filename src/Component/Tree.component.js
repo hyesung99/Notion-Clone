@@ -3,11 +3,13 @@ import { store } from '../core/createStore.js'
 import { addBranchThunk, setDocumentTreeThunk } from '../store/reducer.js'
 import { selectRootDocuments } from '../store/selector.js'
 import useSelector from '../service/useSelector.js'
-import DocumentBranchComponent from './DocumentBranch.component.js'
+import DocumentBranchComponent from './Branch.component.js'
+import { hashRouter } from '../router/hashRouter.js'
 
 export default class DocumentTreeComponent extends Component {
   template() {
     return `
+    <a class="home-logo">홈</a>
     <ul class="root-branches">
     </ul>
     <button class="add-branch-button">+</button>
@@ -42,5 +44,9 @@ export default class DocumentTreeComponent extends Component {
     this.setEvent('click', '#addRootDocumentButton', () =>
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: null }))
     )
+
+    this.setEvent('click', '.home-logo', () => {
+      hashRouter.navigate('/')
+    })
   }
 }
