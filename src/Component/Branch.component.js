@@ -11,8 +11,10 @@ export default class DocumentBranchComponent extends Component {
     return `
       <li class='branch-item id='branch-${documentInfo.id}'>
         <button class="branch-open-button">▶</button>
-        <a class="branch-link">${documentInfo.title}</a>
-        <span class="branch-button-container" id="branch-button-${documentInfo.id}"></span>
+        <a class="branch-link">${documentInfo.title || '제목없음'}</a>
+        <span class="branch-button-container" id="branch-button-${
+          documentInfo.id
+        }"></span>
       </li>
       <ul class="child-branches" id="branch-of-${documentInfo.id}"></ul>
     `
