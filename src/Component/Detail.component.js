@@ -4,7 +4,8 @@ import { hashRouter } from '../router/hashRouter.js'
 import useSelector from '../service/useSelector.js'
 import { setDocumentDetailThunk } from '../store/reducer.js'
 import { selectDocumentDetail } from '../store/selector.js'
-export default class EditorComponent extends Component {
+
+export default class DetailComponent extends Component {
   template() {
     const { title, content } = useSelector(selectDocumentDetail)
     return `

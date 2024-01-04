@@ -3,6 +3,7 @@ import {
   postDocument,
   deleteDocument,
   getDocumentDetail,
+  putDocument,
 } from '../apis/document.api.js'
 
 export const openBranch = (id) => ({
@@ -26,7 +27,7 @@ export const setDocumentTreeThunk = () => async (dispatch) => {
 export const addBranchThunk =
   ({ title, parentId }) =>
   async (dispatch) => {
-    await postDocumentBranch({ title, parentId })
+    await postDocument({ title, parentId })
     dispatch(setDocumentTreeThunk())
     dispatch(openBranch(parentId))
   }
@@ -34,26 +35,42 @@ export const addBranchThunk =
 export const deleteBranchThunk =
   ({ id }) =>
   async (dispatch) => {
-    await deleteDocumentBranch({ id })
+    await deleteDocument({ id })
     dispatch(setDocumentTreeThunk())
   }
 
-export const setEditorThunk = async (id) => {
-  const documentDetail = await getDocumentDetail({ id })
-  dispatch({
-    type: 'SET_TITLE',
-    payload: documentDetail.title,
-  })
-  dispatch({
-    type: 'SET_CONTENT',
-    payload: documentDetail.content,
-  })
-}
+export const setDocumentDetailThunk =
+  ({ id }) =>
+  async (dispatch) => {
+    const documentDetail = await getDocumentDetail({ id })
+    dispatch({
+      type: 'SET_TITLE',
+      payload: documentDetail.title,
+    })
+    dispatch({
+      type: 'SET_CONTENT',
+      payload: documentDetail.content,
+    })
+  }
+
+export const putDocumentTitleThunk =
+  ({ title, id }) =>
+  async (dispatch) => {
+    await putDocument({ title, id })
+    dispatch(setDocumentTreeThunk())
+  }
+
+export const putDocumentContentThunk =
+  ({ content, id }) =>
+  async (dispatch) => {
+    await putDocument({ content, id })
+    dispatch(setDocumentTreeThunk())
+  }
 
 export const rootReducer = (state = {}, action = {}) => {
   return {
     documentTree: documentTreeReducer(state.documentTree, action),
-    documentEditor: documentEditorReducer(state.documentEditor, action),
+    documentDetail: documentDetailReducer(state.documentDetail, action),
   }
 }
 
@@ -83,7 +100,7 @@ export const documentTreeReducer = (
       return state
   }
 }
-export const documentEditorReducer = (
+export const documentDetailReducer = (
   state = {
     title: '',
     content: '',
@@ -101,5 +118,7 @@ export const documentEditorReducer = (
         ...state,
         content: action.payload,
       }
+    default:
+      return state
   }
 }
