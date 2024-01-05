@@ -10,7 +10,7 @@ export default class DocumentTreeComponent extends Component {
   template() {
     return `
     <a class="home-logo">홈</a>
-    <ul class="root-branches">
+    <div class="tree-container"/>
     </ul>
     <button class="add-branch-button">+</button>
     `
@@ -23,17 +23,17 @@ export default class DocumentTreeComponent extends Component {
 
   render() {
     this.$target.innerHTML = this.template()
-    const $rootBranch = this.$target.querySelector('.root-branches')
     const rootDocuments = useSelector(selectRootDocuments)
+    const $treeContainer = document.querySelector('.tree-container')
 
     rootDocuments.forEach((documentInfo) => {
-      const $documentBranchLi = document.createElement('li')
-      $documentBranchLi.classList.add('branch-item')
-      $rootBranch.appendChild($documentBranchLi)
+      const $documentBranchUl = document.createElement('ul')
+      $documentBranchUl.classList.add('branch-list')
+      $treeContainer.appendChild($documentBranchUl)
       this.createChildComponent({
         component: DocumentBranchComponent,
         componentOptions: {
-          $target: $documentBranchLi,
+          $target: $documentBranchUl,
           props: { documentInfo },
         },
       })
