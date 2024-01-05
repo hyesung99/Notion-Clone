@@ -4,17 +4,19 @@ import { closeBranch, openBranch } from '../store/reducer.js'
 import { hashRouter } from '../router/hashRouter.js'
 import DocumentBranchButtons from './BranchButtons.component.js'
 import DocumentEmptyBranch from './EmptyBranch.component.js'
+import useSelector from '../service/useSelector.js'
+import { selectOpenedBranches } from '../store/selector.js'
 
 export default class DocumentBranchComponent extends Component {
   template() {
     const { documentInfo } = this.props
     return `
-      <li class='branch-item id='branch-${documentInfo.id}'>
+      <li class="branch-item" id="branch-${documentInfo.id}">
         <button class="branch-open-button">▶</button>
         <a class="branch-link">${documentInfo.title || '제목없음'}</a>
-        <span class="branch-button-container" id="branch-button-${
+        <div class="branch-button-container" id="branch-button-${
           documentInfo.id
-        }"></span>
+        }"></div>
       </li>
       <ul class="child-branches" id="branch-of-${documentInfo.id}"></ul>
     `
@@ -34,9 +36,9 @@ export default class DocumentBranchComponent extends Component {
       `#branch-button-${documentInfo.id}`
     )
 
-    const { openedBranches } = store.getState('documentTree')
+    const openedBranches = useSelector(selectOpenedBranches)
+
     const isOpen = openedBranches.has(documentInfo.id)
-    const isHover = this.state.isHover
 
     this.createChildComponent({
       component: DocumentBranchButtons,
@@ -44,7 +46,6 @@ export default class DocumentBranchComponent extends Component {
         $target: $documentBranchButtonContainer,
         props: {
           documentInfo,
-          isVisible: isHover,
         },
       },
     })
@@ -79,12 +80,7 @@ export default class DocumentBranchComponent extends Component {
     this.setEvent('click', '.branch-link', () =>
       hashRouter.navigate(`/detail/${id}`)
     )
-    this.setEvent('mouseenter', `.branch-of-${id}`, () => {
-      this.setState({ isHover: true })
-    })
-    this.setEvent('mouseleave', `.branch-of-${id}`, () => {
-      this.setState({ isHover: false })
-    })
+
     this.setEvent('click', '.branch-open-button', () => {
       if (isOpen) {
         store.dispatch(closeBranch(id))
