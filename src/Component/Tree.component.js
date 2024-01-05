@@ -29,6 +29,7 @@ export default class DocumentTreeComponent extends Component {
     rootDocuments.forEach((documentInfo) => {
       const $documentBranchUl = document.createElement('ul')
       $documentBranchUl.classList.add('branch-list')
+      $documentBranchUl.classList.add('root-branch-list')
       $treeContainer.appendChild($documentBranchUl)
       this.createChildComponent({
         component: DocumentBranchComponent,
