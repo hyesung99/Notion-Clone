@@ -18,12 +18,8 @@ export default class DocumentBranchComponent extends Component {
           documentInfo.id
         }"></div>
       </li>
-      <ul class="child-branches" id="branch-of-${documentInfo.id}"></ul>
+      <ul class="branch-list" id="branch-of-${documentInfo.id}"></ul>
     `
-  }
-
-  created() {
-    store.subscribe(this.render.bind(this))
   }
 
   render() {
