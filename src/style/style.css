@@ -110,7 +110,7 @@ ul {
 .add-branch-button:hover,
 .delete-branch-button:hover {
   cursor: pointer;
-  color: #e1ecc8;
+  color: #8b8b8b;
 }
 
 @keyframes bounceIn {
