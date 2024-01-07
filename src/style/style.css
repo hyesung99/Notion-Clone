@@ -105,6 +105,11 @@ ul {
   background: none;
   font-size: 20px;
   transition: all 0.3s;
+  display: none;
+}
+
+.branch-item:hover button {
+  display: block;
 }
 
 .add-branch-button:hover,

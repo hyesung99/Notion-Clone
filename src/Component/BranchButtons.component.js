@@ -11,8 +11,7 @@ export default class DocumentBranchButtons extends Component {
   }
 
   render() {
-    const { isVisible } = this.props
-    this.$target.innerHTML = isVisible ? this.template() : ''
+    this.$target.innerHTML = this.template()
   }
 
   mounted() {
