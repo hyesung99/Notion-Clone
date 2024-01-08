@@ -1,4 +1,5 @@
 import createSelector from '../core/createSelector.js'
+import { findBranch } from '../service/findBranch.js'
 
 const getDocumentsTree = (state) => state.documentTree.documents
 const getOpenedBranches = (state) => state.documentTree.openedBranches
@@ -23,9 +24,12 @@ export const selectDocumentDetail = (state) =>
     () => getContent(state)
   )
 
-export const selectTitle = (state) =>
+export const selectTitle = (state, id) =>
   createSelector(
-    (getRootDocuments) => title,
+    (documentTree) => {
+      const target = findBranch(documentTree, id)
+      return { title: target.title }
+    },
     () => getDocumentsTree(state)
   )
 

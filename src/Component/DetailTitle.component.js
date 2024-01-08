@@ -5,12 +5,13 @@ import {
   putDocumentTitleThunk,
   setDocumentDetailThunk,
 } from '../store/reducer.js'
-import { selectDocumentDetail } from '../store/selector.js'
+import { selectTitle } from '../store/selector.js'
 import { getDetailId } from '../service/getDetailId.js'
 
 export default class Title extends Component {
   template() {
-    const { title } = useSelector(selectDocumentDetail)
+    const id = getDetailId()
+    const { title } = useSelector(selectTitle, id)
     return `
       <input class="detail-title" value=${title}>
     `

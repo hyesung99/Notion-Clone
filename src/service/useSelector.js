@@ -1,8 +1,8 @@
 import { store } from '../core/createStore.js'
 
-const useSelector = (selector) => {
-  const result = selector(store.getState())()
-  return result
+const useSelector = (selector, ...payload) => {
+  const resultSelector = selector(store.getState(), ...payload)
+  return resultSelector()
 }
 
 export default useSelector
