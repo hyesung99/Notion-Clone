@@ -17,8 +17,8 @@ export const closeBranch = ({ id }) => ({
   payload: id,
 })
 
-export const setBranch = ({ documents }) => ({
-  type: 'SET_BRANCH',
+export const setTree = ({ documents }) => ({
+  type: 'SET_TREE',
   payload: documents,
 })
 
@@ -34,7 +34,7 @@ export const setContent = ({ content }) => ({
 
 export const setDocumentTreeThunk = () => async (dispatch) => {
   const documents = await getDocumentTree()
-  dispatch(setBranch({ documents }))
+  dispatch(setTree({ documents }))
 }
 
 export const addBranchThunk =
@@ -42,7 +42,7 @@ export const addBranchThunk =
   async (dispatch) => {
     await postDocument({ title, parentId })
     dispatch(setDocumentTreeThunk())
-    dispatch(openBranch(parentId))
+    dispatch(openBranch({ id: parentId }))
   }
 
 export const deleteBranchThunk =
@@ -92,7 +92,7 @@ export const documentTreeReducer = (
       targetDocument.title = action.payload.title
       return newState
 
-    case 'SET_BRANCH':
+    case 'SET_TREE':
       return {
         ...state,
         documents: action.payload,
