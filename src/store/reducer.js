@@ -5,6 +5,7 @@ import {
   getDocumentDetail,
   putDocument,
 } from '../apis/document.api.js'
+import { findBranch } from '../service/findBranch.js'
 
 export const openBranch = (id) => ({
   type: 'OPEN_BRANCH',
@@ -21,7 +22,12 @@ export const setBranch = (documents) => ({
   payload: documents,
 })
 
-export const setTitle = (title) => ({
+export const setBranchTitle = (title, id) => ({
+  type: 'SET_BRANCH_TITLE',
+  payload: { title, id },
+})
+
+export const setTitle = (title, id) => ({
   type: 'SET_TITLE',
   payload: title,
 })
@@ -64,7 +70,7 @@ export const putDocumentTitleThunk =
   async (dispatch) => {
     await putDocument({ title, id })
     dispatch(setTitle(title))
-    dispatch(setDocumentTreeThunk())
+    dispatch(setBranchTitle(title, id))
   }
 
 export const putDocumentContentThunk =
@@ -86,6 +92,12 @@ export const documentTreeReducer = (
   action
 ) => {
   switch (action.type) {
+    case 'SET_BRANCH_TITLE':
+      const newState = Object.assign({}, state)
+      const targetDocument = findBranch(newState.documents, action.payload.id)
+      targetDocument.title = action.payload.title
+      return newState
+
     case 'SET_BRANCH':
       return {
         ...state,

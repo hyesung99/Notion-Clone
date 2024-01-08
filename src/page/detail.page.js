@@ -22,15 +22,4 @@ export default class DetailPage extends Component {
       },
     })
   }
-
-  // mounted() {
-  //   this.setEvent('change', '.detail-title', (event) => {
-  //     store.dispatch(
-  //       putDocumentTitleThunk({
-  //         title: event.target.value,
-  //         id: getDetailId(),
-  //       })
-  //     )
-  //   })
-  // }
 }
