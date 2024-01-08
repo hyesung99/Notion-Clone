@@ -1,17 +1,8 @@
 import Component from '../core/Component.js'
-import { store } from '../core/createStore.js'
-import { getDetailId } from '../service/getDetailId.js'
-import useSelector from '../service/useSelector.js'
-import {
-  putDocumentTitleThunk,
-  setDocumentDetailThunk,
-} from '../store/reducer.js'
-import { selectDocumentDetail } from '../store/selector.js'
 import DetailTitleComponent from '../component/DetailTitle.component.js'
 
 export default class DetailPage extends Component {
   template() {
-    // const { title, content } = useSelector(selectDocumentDetail)
     return `
       <div class="detail-page">
         <section class="detail-header"/>
@@ -20,21 +11,14 @@ export default class DetailPage extends Component {
     `
   }
 
-  created() {
-    const id = getDetailId()
-    store.dispatch(setDocumentDetailThunk({ id }))
-  }
+  created() {}
 
   render() {
     this.$target.innerHTML = this.template()
-    const id = getDetailId()
-    const { title, content } = useSelector(selectDocumentDetail)
-
     this.createChildComponent({
       component: DetailTitleComponent,
       componentOptions: {
         $target: document.querySelector('.detail-header'),
-        props: { title, id },
       },
     })
   }
