@@ -5,8 +5,8 @@ export default class DetailPage extends Component {
   template() {
     return `
       <div class="detail-page">
-        <section class="detail-header"/>
-        <section class="detail-body"/>
+        <section class="title-section"/>
+        <section class="content-section"/>
       </div>
     `
   }
@@ -18,7 +18,7 @@ export default class DetailPage extends Component {
     this.createChildComponent({
       component: DetailTitleComponent,
       componentOptions: {
-        $target: document.querySelector('.detail-header'),
+        $target: document.querySelector('.title-section'),
       },
     })
   }
