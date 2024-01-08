@@ -27,11 +27,6 @@ export const setBranchTitle = (title, id) => ({
   payload: { title, id },
 })
 
-export const setTitle = (title, id) => ({
-  type: 'SET_TITLE',
-  payload: title,
-})
-
 export const setContent = (content) => ({
   type: 'SET_CONTENT',
   payload: content,
@@ -69,7 +64,6 @@ export const putDocumentTitleThunk =
   ({ title, id }) =>
   async (dispatch) => {
     await putDocument({ title, id })
-    dispatch(setTitle(title))
     dispatch(setBranchTitle(title, id))
   }
 
@@ -121,17 +115,11 @@ export const documentTreeReducer = (
 }
 export const documentDetailReducer = (
   state = {
-    title: '',
     content: '',
   },
   action
 ) => {
   switch (action.type) {
-    case 'SET_TITLE':
-      return {
-        ...state,
-        title: action.payload,
-      }
     case 'SET_CONTENT':
       return {
         ...state,
