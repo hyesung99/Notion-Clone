@@ -19,11 +19,10 @@ export default class Title extends Component {
 
   created() {
     store.dispatch(setDocumentDetailThunk({ id: getDetailId() }))
-    store.subscribe(this.render.bind(this))
   }
 
   mounted() {
-    this.setEvent('change', '.detail-title', (event) => {
+    this.setEvent('input', '.detail-title', (event) => {
       store.dispatch(
         putDocumentTitleThunk({
           title: event.target.value,
