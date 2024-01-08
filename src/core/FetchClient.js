@@ -34,8 +34,6 @@ class FetchClient {
       method: 'PUT',
       body: JSON.stringify(data),
     })
-
-    return response.json()
   }
 
   async delete(url, option = {}) {
