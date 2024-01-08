@@ -7,34 +7,34 @@ import {
 } from '../apis/document.api.js'
 import { findBranch } from '../service/findBranch.js'
 
-export const openBranch = (id) => ({
+export const openBranch = ({ id }) => ({
   type: 'OPEN_BRANCH',
   payload: id,
 })
 
-export const closeBranch = (id) => ({
+export const closeBranch = ({ id }) => ({
   type: 'CLOSE_BRANCH',
   payload: id,
 })
 
-export const setBranch = (documents) => ({
+export const setBranch = ({ documents }) => ({
   type: 'SET_BRANCH',
   payload: documents,
 })
 
-export const setBranchTitle = (title, id) => ({
+export const setBranchTitle = ({ title, id }) => ({
   type: 'SET_BRANCH_TITLE',
   payload: { title, id },
 })
 
-export const setContent = (content) => ({
+export const setContent = ({ content }) => ({
   type: 'SET_CONTENT',
   payload: content,
 })
 
 export const setDocumentTreeThunk = () => async (dispatch) => {
   const documents = await getDocumentTree()
-  dispatch(setBranch(documents))
+  dispatch(setBranch({ documents }))
 }
 
 export const addBranchThunk =
@@ -56,15 +56,15 @@ export const setDocumentDetailThunk =
   ({ id }) =>
   async (dispatch) => {
     const documentDetail = await getDocumentDetail({ id })
-    dispatch(setTitle(documentDetail.title))
-    dispatch(setContent(documentDetail.content))
+    dispatch(setBranchTitle({ title: documentDetail.title, id }))
+    dispatch(setContent({ content: documentDetail.content }))
   }
 
 export const putDocumentTitleThunk =
   ({ title, id }) =>
   async (dispatch) => {
     await putDocument({ title, id })
-    dispatch(setBranchTitle(title, id))
+    dispatch(setBranchTitle({ title, id }))
   }
 
 export const putDocumentContentThunk =
