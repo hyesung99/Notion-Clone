@@ -16,10 +16,10 @@ export default class DocumentBranchButtons extends Component {
 
   mounted() {
     const { id } = this.props.documentInfo
-    this.setEvent('click', '.addDocumentButton', () => {
+    this.setEvent('click', '.add-branch-button', () => {
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: id }))
     })
-    this.setEvent('click', '.deleteDocumentButton', () => {
+    this.setEvent('click', '.delete-branch-button', () => {
       store.dispatch(deleteBranchThunk({ id }))
     })
   }
