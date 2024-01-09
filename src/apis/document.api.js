@@ -27,7 +27,7 @@ export const deleteDocument = async ({ id }) => {
 export const putDocument = async ({ id, title, content }) => {
   const data = await NotionFetchClient.put(END_POINTS.DOCUMENT_DETAIL(id), {
     title,
-    body: content,
+    content,
   })
   return data
 }
