@@ -10,13 +10,12 @@ import { selectOpenedBranches } from '../store/selector.js'
 export default class DocumentBranchComponent extends Component {
   template() {
     const { documentInfo } = this.props
+    const { id, title } = documentInfo
     return `
-      <li class="branch-item" id="branch-${documentInfo.id}">
-        <button class="branch-open-button">▶</button>
-        <a class="branch-link">${documentInfo.title || '제목없음'}</a>
-        <div class="branch-button-container" id="branch-button-${
-          documentInfo.id
-        }"></div>
+      <li class="branch-item" id="branch-${id}">
+        <button class="branch-open-button" id="open-button-${id}">▶</button>
+        <a class="branch-link">${title || '제목없음'}</a>
+        <div class="branch-button-container" id="branch-button-${id}"></div>
       </li>
       <ul class="branch-list" id="branch-of-${documentInfo.id}"></ul>
     `
@@ -24,7 +23,9 @@ export default class DocumentBranchComponent extends Component {
 
   render() {
     const { documentInfo } = this.props
-    this.$target.innerHTML = this.template()
+    // this.$target.innerHTML = this.template()
+    this.$target.insertAdjacentHTML('beforeend', this.template())
+
     const $childBranches = document.querySelector(
       `#branch-of-${documentInfo.id}`
     )
@@ -32,7 +33,7 @@ export default class DocumentBranchComponent extends Component {
       `#branch-button-${documentInfo.id}`
     )
 
-    const openedBranches = useSelector(selectOpenedBranches)
+    const { openedBranches } = useSelector(selectOpenedBranches)
 
     const isOpen = openedBranches.has(documentInfo.id)
 
@@ -70,18 +71,18 @@ export default class DocumentBranchComponent extends Component {
 
   mounted() {
     const { id } = this.props.documentInfo
-    const { openedBranches } = store.getState('documentTree')
+    const { openedBranches } = useSelector(selectOpenedBranches)
     const isOpen = openedBranches.has(id)
 
     this.setEvent('click', '.branch-link', () =>
       hashRouter.navigate(`/detail/${id}`)
     )
 
-    this.setEvent('click', '.branch-open-button', () => {
+    this.setEvent('click', `#open-button-${id}`, () => {
       if (isOpen) {
-        store.dispatch(closeBranch(id))
+        store.dispatch(closeBranch({ id }))
       } else {
-        store.dispatch(openBranch(id))
+        store.dispatch(openBranch({ id }))
       }
     })
   }

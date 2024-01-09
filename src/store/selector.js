@@ -8,7 +8,9 @@ const getContent = (state) => state.documentDetail.content
 
 export const selectDocumentTree = (state) =>
   createSelector(
-    (documents) => documents,
+    (documentTree) => {
+      return { documentTree }
+    },
     () => getDocumentsTree(state)
   )
 
@@ -35,6 +37,8 @@ export const selectTitle = (state, id) =>
 
 export const selectOpenedBranches = (state) =>
   createSelector(
-    (openedBranches) => openedBranches,
+    (openedBranches) => {
+      return { openedBranches }
+    },
     () => getOpenedBranches(state)
   )

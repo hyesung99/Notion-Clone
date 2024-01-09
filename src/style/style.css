@@ -112,6 +112,10 @@ ul {
   display: block;
 }
 
+.root-branch-button {
+  display: block;
+}
+
 .add-branch-button:hover,
 .delete-branch-button:hover {
   cursor: pointer;
