@@ -29,7 +29,10 @@ export const createHashRouter = (routes) => {
     return routes[matchedRoute]
   }
 
-  window.addEventListener('popstate', () => notify())
+  window.addEventListener('popstate', () => {
+    
+    notify()
+  })
 
   return {
     notify,

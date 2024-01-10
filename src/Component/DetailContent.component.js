@@ -3,7 +3,11 @@ import { STORAGE_KEYS } from '../constants/storage.js'
 import Component from '../core/Component.js'
 import { getDetailId } from '../service/getDetailId.js'
 
-import { getItem, removeItem, setItem } from '../storage/storage.js'
+import {
+  getStorageItem,
+  removeStorageItem,
+  setStorageItem,
+} from '../storage/storage.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
 import TextArea from './TextArea.component.js'
 
@@ -35,7 +39,7 @@ export default class DetailContent extends Component {
 
   async getRecentContent() {
     const id = getDetailId()
-    const storageContent = getItem(STORAGE_KEYS.CONTENT(id))
+    const storageContent = getStorageItem(STORAGE_KEYS.CONTENT(id))
     const serverDetail = await getDocumentDetail({ id })
 
     if (!storageContent) return serverDetail.content
@@ -47,11 +51,11 @@ export default class DetailContent extends Component {
 
       if (confirmed) {
         putDocument({ id, content: storageContent.content })
-        removeItem(STORAGE_KEYS.CONTENT(id))
+        removeStorageItem(STORAGE_KEYS.CONTENT(id))
         return storageContent.content
       }
     }
-    removeItem(STORAGE_KEYS.CONTENT(id))
+    removeStorageItem(STORAGE_KEYS.CONTENT(id))
     return serverDetail.content
   }
 
@@ -59,7 +63,7 @@ export default class DetailContent extends Component {
     const id = getDetailId()
     const content = event[0].target.innerText
     const updateAt = new Date()
-    setItem(STORAGE_KEYS.CONTENT(id), { content, updateAt })
+    setStorageItem(STORAGE_KEYS.CONTENT(id), { content, updateAt })
   }
 
   async saveContentToServer(event) {
