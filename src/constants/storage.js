@@ -1,3 +1,3 @@
 export const STORAGE_KEYS = {
-  CONTENT: (id) => `DETAIL_${id}`,
+  CONTENT: (id) => `CONTENT_${id}`,
 }

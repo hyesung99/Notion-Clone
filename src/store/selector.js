@@ -26,13 +26,21 @@ export const selectDocumentDetail = (state) =>
     () => getContent(state)
   )
 
-export const selectTitle = (state, id) =>
+export const selectDetailTitle = (state, id) =>
   createSelector(
     (documentTree) => {
       const target = findBranch(documentTree, id)
       return { title: target.title }
     },
     () => getDocumentsTree(state)
+  )
+
+export const selectDetailContent = (state) =>
+  createSelector(
+    (content) => {
+      return { content }
+    },
+    () => getContent(state)
   )
 
 export const selectOpenedBranches = (state) =>

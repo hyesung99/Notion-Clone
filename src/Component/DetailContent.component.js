@@ -41,8 +41,6 @@ export default class DetailContent extends Component {
 
     const storageDate = new Date(storageContent.createdAt)
     const serverDate = new Date(serverDetail.createdAt)
-    console.log(storageDate.getDate(), serverDate.getDate())
-    console.log(storageDate > serverDate)
     if (storageDate > serverDate) {
       const confirmed = confirm('저장된 내용이 있습니다. 불러오시겠습니까?')
 
@@ -58,7 +56,6 @@ export default class DetailContent extends Component {
 
   saveContentToStorage(event) {
     const id = getDetailId()
-    console.log(event)
     const content = event[0].target.innerText
     const createdAt = new Date()
 
