@@ -52,14 +52,6 @@ export const deleteBranchThunk =
     dispatch(setDocumentTreeThunk())
   }
 
-export const setDocumentDetailThunk =
-  ({ id }) =>
-  async (dispatch) => {
-    const documentDetail = await getDocumentDetail({ id })
-    dispatch(setBranchTitle({ title: documentDetail.title, id }))
-    dispatch(setContent({ content: documentDetail.content }))
-  }
-
 export const putDocumentTitleThunk =
   ({ title, id }) =>
   async (dispatch) => {
