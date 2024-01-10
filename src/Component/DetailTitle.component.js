@@ -9,8 +9,9 @@ export default class Title extends Component {
   template() {
     const id = getDetailId()
     const { title } = useSelector(selectDetailTitle, id)
+    console.log(title)
     return `
-      <input class="detail-title" value=${title}>
+      <input class="detail-title" value=${title || '제목없음'}>
     `
   }
 
