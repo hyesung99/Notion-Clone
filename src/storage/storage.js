@@ -20,9 +20,9 @@ export const getSessionItem = (key, defaultValue) => {
 }
 
 export const setSessionItem = (key, value) => {
-  sessionStorage.setSessionItem(key, JSON.stringify(value))
+  sessionStorage.setItem(key, JSON.stringify(value))
 }
 
 export const removeSessionItem = (key) => {
-  sessionStorage.removeSessionItem(key)
+  sessionStorage.removeItem(key)
 }

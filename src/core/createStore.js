@@ -23,7 +23,11 @@ export const createStore = (reducer) => {
 
   const subscribe = (listener) => {
     listeners.push(listener)
-    return () => listeners.delete(listener)
+  }
+
+  const unsubscribe = (listener) => {
+    const index = listeners.indexOf(listener)
+    listeners.splice(index, 1)
   }
 
   dispatch(state, {})
@@ -32,6 +36,7 @@ export const createStore = (reducer) => {
     dispatch,
     getState,
     subscribe,
+    unsubscribe,
   }
 }
 

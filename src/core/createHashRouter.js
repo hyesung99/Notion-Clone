@@ -1,3 +1,5 @@
+import { getSessionItem, setSessionItem } from '../storage/storage.js'
+
 export const createHashRouter = (routes) => {
   const listeners = []
 
@@ -7,6 +9,8 @@ export const createHashRouter = (routes) => {
 
   const subscribe = (listener) => {
     listeners.push(listener)
+    const lastPath = getSessionItem('lastPath')
+    if (lastPath) notify()
   }
 
   const notify = () => {
@@ -30,7 +34,7 @@ export const createHashRouter = (routes) => {
   }
 
   window.addEventListener('popstate', () => {
-    
+    setSessionItem('lastPath', getHash())
     notify()
   })
 

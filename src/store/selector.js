@@ -29,7 +29,7 @@ export const selectDocumentDetail = (state) =>
 export const selectDetailTitle = (state, id) =>
   createSelector(
     (documentTree) => {
-      const target = findBranch(documentTree, id)
+      const target = findBranch(documentTree, id) || { title: '' }
       return { title: target.title }
     },
     () => getDocumentsTree(state)
