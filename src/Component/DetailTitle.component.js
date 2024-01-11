@@ -1,10 +1,12 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
 import useSelector from '../service/useSelector.js'
-import { putDocumentTitleThunk } from '../store/reducer.js'
+import { putBranchTitle, putDocumentTitleThunk } from '../store/reducer.js'
 import { selectDetailTitle } from '../store/selector.js'
 import { getDetailId } from '../service/getDetailId.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
+
+const PUT_TITLE_DELAY = 500
 
 export default class Title extends Component {
   template() {
@@ -23,7 +25,7 @@ export default class Title extends Component {
   mounted() {
     this.setEvent('input', '.detail-title', (event) => {
       store.dispatch(
-        putDocumentTitleThunk({
+        putBranchTitle({
           title: event.target.value,
           id: getDetailId(),
         })
@@ -33,8 +35,14 @@ export default class Title extends Component {
     this.setEvent('focusin', '.detail-title', () =>
       store.unsubscribe(this.render.bind(this))
     )
-    this.setEvent('focusout', '.detail-title', () =>
+    this.setEvent('focusout', '.detail-title', (event) => {
       store.subscribe(this.render.bind(this))
-    )
+      store.dispatch(
+        putDocumentTitleThunk({
+          title: event.target.value,
+          id: getDetailId(),
+        })
+      )
+    })
   }
 }

@@ -2,7 +2,6 @@ import {
   getDocumentTree,
   postDocument,
   deleteDocument,
-  getDocumentDetail,
   putDocument,
 } from '../apis/document.api.js'
 import { findBranch } from '../service/findBranch.js'
@@ -54,10 +53,14 @@ export const deleteBranchThunk =
 
 export const putDocumentTitleThunk =
   ({ title, id }) =>
-  async (dispatch) => {
+  async () => {
     await putDocument({ title, id })
-    dispatch(setBranchTitle({ title, id }))
   }
+
+export const putBranchTitle =
+  ({ title, id }) =>
+  (dispatch) =>
+    dispatch(setBranchTitle({ title, id }))
 
 export const putDocumentContentThunk =
   ({ content, id }) =>
