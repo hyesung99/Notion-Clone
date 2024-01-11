@@ -7,11 +7,11 @@ export const getStorageItem = (key, defaultValue) => {
 }
 
 export const setStorageItem = (key, value) => {
-  localStorage.setStorageItem(key, JSON.stringify(value))
+  localStorage.setItem(key, JSON.stringify(value))
 }
 
 export const removeStorageItem = (key) => {
-  localStorage.removeStorageItem(key)
+  localStorage.removeItem(key)
 }
 
 export const getSessionItem = (key, defaultValue) => {
