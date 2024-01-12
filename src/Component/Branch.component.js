@@ -14,7 +14,7 @@ export default class DocumentBranchComponent extends Component {
     return `
       <li class="branch-item" id="branch-${id}">
         <button class="branch-open-button" id="open-button-${id}">▶</button>
-        <a class="branch-link">${title || '제목없음'}</a>
+        <a class="branch-link" id="branch-link-${id}">${title || '제목없음'}</a>
         <div class="branch-button-container" id="branch-button-${id}"></div>
       </li>
       <ul class="branch-list" id="branch-of-${documentInfo.id}"></ul>
@@ -74,7 +74,7 @@ export default class DocumentBranchComponent extends Component {
     const { openedBranches } = useSelector(selectOpenedBranches)
     const isOpen = openedBranches.has(id)
 
-    this.setEvent('click', '.branch-link', () =>
+    this.setEvent('click', `#branch-link-${id}`, () =>
       hashRouter.navigate(`/detail/${id}`)
     )
 

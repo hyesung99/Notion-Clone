@@ -6,7 +6,7 @@ export default class App extends Component {
   template() {
     return `
     <aside id='document-tree'></aside>
-    <section id='detail'/>
+    <section class='page-section'/>
   `
   }
 
@@ -22,13 +22,13 @@ export default class App extends Component {
       },
     })
 
-    const $detail = this.$target.querySelector('#detail')
+    const $pageSection = this.$target.querySelector('.page-section')
 
     hashRouter.subscribe((matchedRoute) =>
       this.createChildComponent({
         component: matchedRoute,
         componentOptions: {
-          $target: $detail,
+          $target: $pageSection,
         },
       })
     )
