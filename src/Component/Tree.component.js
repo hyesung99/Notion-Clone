@@ -44,7 +44,7 @@ export default class DocumentTreeComponent extends Component {
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: null }))
     )
     this.setEvent('click', '.home-logo', () => {
-      hashRouter.navigate('/')
+      hashRouter.navigate('')
     })
   }
 }

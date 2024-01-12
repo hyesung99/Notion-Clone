@@ -10,7 +10,7 @@ export const createHashRouter = (routes) => {
   const subscribe = (listener) => {
     listeners.push(listener)
     const lastPath = getSessionItem('lastPath')
-    if (lastPath) notify()
+    notify(lastPath)
   }
 
   const notify = () => {
@@ -23,6 +23,9 @@ export const createHashRouter = (routes) => {
 
   const getMatchedRoute = () => {
     const hash = getHash()
+
+    if (!hash) return routes['/']
+
     const matchedRoute = Object.keys(routes).find((routePattern) => {
       const pattern = new RegExp(`^${routePattern}$`)
       return pattern.test(hash)
