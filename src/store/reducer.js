@@ -16,9 +16,18 @@ export const closeBranch = ({ id }) => ({
   payload: id,
 })
 
-export const setTree = ({ documents }) => ({
+export const setTree = () => ({
   type: 'SET_TREE',
-  payload: documents,
+})
+
+export const setTreeSuccess = ({ documents }) => ({
+  type: 'SET_TREE_SUCCESS',
+  payload: { documents },
+})
+
+export const setTreeFail = (error) => ({
+  type: 'SET_TREE_ERROR',
+  payload: { error },
 })
 
 export const setBranchTitle = ({ title, id }) => ({
@@ -32,16 +41,23 @@ export const setContent = ({ content }) => ({
 })
 
 export const setDocumentTreeThunk = () => async (dispatch) => {
-  const documents = await getDocumentTree()
-  dispatch(setTree({ documents }))
+  dispatch(setTree())
+  try {
+    const documents = await getDocumentTree()
+    dispatch(setTreeSuccess({ documents }))
+  } catch (error) {
+    dispatch(setTreeFail(error))
+  }
 }
 
 export const addBranchThunk =
   ({ title, parentId }) =>
   async (dispatch) => {
-    await postDocument({ title, parentId })
-    dispatch(setDocumentTreeThunk())
-    dispatch(openBranch({ id: parentId }))
+    try {
+      await postDocument({ title, parentId })
+      dispatch(setDocumentTreeThunk())
+      dispatch(openBranch({ id: parentId }))
+    } catch {}
   }
 
 export const deleteBranchThunk =
@@ -69,6 +85,19 @@ export const putDocumentContentThunk =
     dispatch(setDocumentTreeThunk())
   }
 
+const documentTreeInitialState = {
+  documents: {
+    loading: false,
+    data: null,
+    error: null,
+  },
+  openedBranches: new Set(),
+}
+
+const documentDetailInitialState = {
+  content: '',
+}
+
 export const rootReducer = (state = {}, action = {}) => {
   return {
     documentTree: documentTreeReducer(state.documentTree, action),
@@ -77,7 +106,7 @@ export const rootReducer = (state = {}, action = {}) => {
 }
 
 export const documentTreeReducer = (
-  state = { documents: [], openedBranches: new Set() },
+  state = documentTreeInitialState,
   action
 ) => {
   switch (action.type) {
@@ -90,7 +119,30 @@ export const documentTreeReducer = (
     case 'SET_TREE':
       return {
         ...state,
-        documents: action.payload,
+        documents: {
+          loading: true,
+          data: null,
+          error: null,
+        },
+      }
+
+    case 'SET_TREE_SUCCESS':
+      return {
+        ...state,
+        documents: {
+          loading: false,
+          data: action.payload.documents,
+          error: null,
+        },
+      }
+    case 'SET_TREE_ERROR':
+      return {
+        ...state,
+        documents: {
+          loading: false,
+          data: null,
+          error: action.payload.error,
+        },
       }
     case 'OPEN_BRANCH':
       return {
@@ -109,9 +161,7 @@ export const documentTreeReducer = (
   }
 }
 export const documentDetailReducer = (
-  state = {
-    content: '',
-  },
+  state = documentDetailInitialState,
   action
 ) => {
   switch (action.type) {
