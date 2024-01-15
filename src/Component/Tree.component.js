@@ -22,7 +22,11 @@ export default class DocumentTreeComponent extends Component {
 
   render() {
     this.$target.innerHTML = this.template()
-    const { documentTree } = useSelector(selectDocumentTree)
+
+    const { loading, data: documentTree } = useSelector(selectDocumentTree)
+
+    if (loading) return
+
     const $treeContainer = document.querySelector('.tree-container')
     documentTree.forEach((documentInfo) => {
       const $documentBranchUl = document.createElement('ul')
