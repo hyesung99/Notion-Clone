@@ -40,6 +40,16 @@ export const setContent = ({ content }) => ({
   payload: content,
 })
 
+export const setContentSuccess = ({ content }) => ({
+  type: 'SET_CONTENT_SUCCESS',
+  payload: { content },
+})
+
+export const setContentFail = (error) => ({
+  type: 'SET_CONTENT_ERROR',
+  payload: { error },
+})
+
 export const setDocumentTreeThunk = () => async (dispatch) => {
   dispatch(setTree())
   try {
@@ -95,7 +105,11 @@ const documentTreeInitialState = {
 }
 
 const documentDetailInitialState = {
-  content: '',
+  content: {
+    loading: false,
+    data: null,
+    error: null,
+  },
 }
 
 export const rootReducer = (state = {}, action = {}) => {
@@ -172,7 +186,30 @@ export const documentDetailReducer = (
     case 'SET_CONTENT':
       return {
         ...state,
-        content: action.payload,
+        content: {
+          loading: true,
+          data: null,
+          error: null,
+        },
+      }
+    case 'SET_CONTENT_SUCCESS':
+      return {
+        ...state,
+        content: {
+          loading: false,
+          data: action.payload.content,
+          error: null,
+        },
+      }
+
+    case 'SET_CONTENT_ERROR':
+      return {
+        ...state,
+        content: {
+          loading: false,
+          data: null,
+          error: action.payload.error,
+        },
       }
     default:
       return state
