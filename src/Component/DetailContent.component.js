@@ -1,22 +1,29 @@
-import { getDocumentDetail, putDocument } from '../apis/document.api.js'
+import { putDocument } from '../apis/document.api.js'
 import { STORAGE_KEYS } from '../constants/storage.js'
 import Component from '../core/Component.js'
+import { store } from '../core/createStore.js'
 import { getDetailId } from '../service/getDetailId.js'
+import useSelector from '../service/useSelector.js'
 
-import {
-  getStorageItem,
-  removeStorageItem,
-  setStorageItem,
-} from '../storage/storage.js'
+import { setStorageItem } from '../storage/storage.js'
+import { getDocumentContentThunk } from '../store/reducer.js'
+import { selectDetailContent } from '../store/selector.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
 import TextArea from './TextArea.component.js'
 
 export default class DetailContent extends Component {
+  created() {
+    store.subscribe(this.render.bind(this))
+    store.dispatch(getDocumentContentThunk({ id: getDetailId() }))
+  }
+
   async render() {
     const STORAGE_DEBOUNCE_DELAY = 300
     const SERVER_DEBOUNCE_DELAY = 1000
 
-    const content = await this.getRecentContent()
+    const { data: content, loading, error } = useSelector(selectDetailContent)
+
+    if (loading) return
 
     this.createChildComponent({
       component: TextArea,
@@ -35,28 +42,6 @@ export default class DetailContent extends Component {
         },
       },
     })
-  }
-
-  async getRecentContent() {
-    const id = getDetailId()
-    const storageContent = getStorageItem(STORAGE_KEYS.CONTENT(id))
-    const serverDetail = await getDocumentDetail({ id })
-
-    if (!storageContent) return serverDetail.content
-
-    const storageDate = new Date(storageContent.updateAt)
-    const serverDate = new Date(serverDetail.updateAt)
-    if (storageDate > serverDate) {
-      const confirmed = confirm('저장된 내용이 있습니다. 불러오시겠습니까?')
-
-      if (confirmed) {
-        putDocument({ id, content: storageContent.content })
-        removeStorageItem(STORAGE_KEYS.CONTENT(id))
-        return storageContent.content
-      }
-    }
-    removeStorageItem(STORAGE_KEYS.CONTENT(id))
-    return serverDetail.content
   }
 
   saveContentToStorage(event) {

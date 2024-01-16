@@ -3,33 +3,20 @@ import { findBranch } from '../service/findBranch.js'
 
 const getDocumentsTree = (state) => state.documentTree.documents
 const getOpenedBranches = (state) => state.documentTree.openedBranches
-const getTitle = (state) => state.documentDetail.title
 const getContent = (state) => state.documentDetail.content
 
 export const selectDocumentTree = (state) =>
   createSelector(
-    (documentTree) => {
-      return { documentTree }
+    ({ data, loading, error }) => {
+      return { data, loading, error }
     },
     () => getDocumentsTree(state)
-  )
-
-export const selectDocumentDetail = (state) =>
-  createSelector(
-    (title, content) => {
-      return {
-        title,
-        content,
-      }
-    },
-    () => getTitle(state),
-    () => getContent(state)
   )
 
 export const selectDetailTitle = (state, id) =>
   createSelector(
     (documentTree) => {
-      const target = findBranch(documentTree, id) || { title: '' }
+      const target = findBranch(documentTree.data, id) || { title: '' }
       return { title: target.title }
     },
     () => getDocumentsTree(state)
@@ -37,8 +24,8 @@ export const selectDetailTitle = (state, id) =>
 
 export const selectDetailContent = (state) =>
   createSelector(
-    (content) => {
-      return { content }
+    ({ data, loading, error }) => {
+      return { data, loading, error }
     },
     () => getContent(state)
   )

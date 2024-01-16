@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
-import { addBranchThunk, setDocumentTreeThunk } from '../store/reducer.js'
+import { addBranchThunk, getDocumentTreeThunk } from '../store/reducer.js'
 import { selectDocumentTree } from '../store/selector.js'
 import useSelector from '../service/useSelector.js'
 import DocumentBranchComponent from './Branch.component.js'
@@ -17,7 +17,7 @@ export default class DocumentTreeComponent extends Component {
 
   created() {
     store.subscribe(this.render.bind(this))
-    store.dispatch(setDocumentTreeThunk())
+    store.dispatch(getDocumentTreeThunk())
   }
 
   render() {

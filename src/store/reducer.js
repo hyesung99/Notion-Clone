@@ -5,6 +5,7 @@ import {
   putDocument,
 } from '../apis/document.api.js'
 import { findBranch } from '../service/findBranch.js'
+import { getRecentContent } from '../service/getRecentContent.js'
 
 export const openBranch = ({ id }) => ({
   type: 'OPEN_BRANCH',
@@ -35,9 +36,8 @@ export const setBranchTitle = ({ title, id }) => ({
   payload: { title, id },
 })
 
-export const getContent = ({ content }) => ({
+export const getContent = () => ({
   type: 'GET_CONTENT',
-  payload: content,
 })
 
 export const getContentSuccess = ({ content }) => ({
@@ -93,6 +93,19 @@ export const putDocumentContentThunk =
   async (dispatch) => {
     await putDocument({ content, id })
     dispatch(getDocumentTreeThunk())
+  }
+
+export const getDocumentContentThunk =
+  ({ id }) =>
+  async (dispatch) => {
+    dispatch(getContent())
+    try {
+      const content = await getRecentContent({ id })
+      dispatch(getContentSuccess({ content }))
+    } catch (error) {
+      console.log(error)
+      dispatch(getContentFail(error))
+    }
   }
 
 const documentTreeInitialState = {
