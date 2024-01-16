@@ -4,9 +4,6 @@ import useSelector from '../service/useSelector.js'
 import { putBranchTitle, putDocumentTitleThunk } from '../store/reducer.js'
 import { selectDetailTitle } from '../store/selector.js'
 import { getDetailId } from '../service/getDetailId.js'
-import { applyDebounce } from '../utils/applyDebounce.js'
-
-const PUT_TITLE_DELAY = 500
 
 export default class Title extends Component {
   template() {
