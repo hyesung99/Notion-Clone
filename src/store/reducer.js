@@ -88,7 +88,7 @@ export const putDocumentContentThunk =
 const documentTreeInitialState = {
   documents: {
     loading: false,
-    data: null,
+    data: [],
     error: null,
   },
   openedBranches: new Set(),
@@ -112,7 +112,11 @@ export const documentTreeReducer = (
   switch (action.type) {
     case 'SET_BRANCH_TITLE':
       const newState = Object.assign({}, state)
-      const targetDocument = findBranch(newState.documents, action.payload.id)
+      const targetDocument = findBranch(
+        newState.documents.data,
+        action.payload.id
+      )
+
       targetDocument.title = action.payload.title
       return newState
 
@@ -121,7 +125,7 @@ export const documentTreeReducer = (
         ...state,
         documents: {
           loading: true,
-          data: null,
+          data: state.documents.data ?? [],
           error: null,
         },
       }
