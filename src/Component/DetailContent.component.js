@@ -10,6 +10,7 @@ import { getDocumentContentThunk } from '../store/reducer.js'
 import { selectDetailContent } from '../store/selector.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
 import TextArea from './TextArea.component.js'
+import DetailContentSkeleton from './skeletons/DetailContentSkeleton.js'
 
 export default class DetailContent extends Component {
   created() {
@@ -23,7 +24,15 @@ export default class DetailContent extends Component {
 
     const { data: content, loading, error } = useSelector(selectDetailContent)
 
-    if (loading) return
+    if (loading) {
+      this.createChildComponent({
+        component: DetailContentSkeleton,
+        componentOptions: {
+          $target: this.$target,
+        },
+      })
+      return
+    }
 
     this.createChildComponent({
       component: TextArea,
