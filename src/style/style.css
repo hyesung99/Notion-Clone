@@ -33,6 +33,13 @@ ul {
   padding: 0;
 }
 
+.home-logo {
+  display: flex;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
 .branch-list {
   width: 100%;
   padding-left: 10px;
@@ -201,4 +208,24 @@ ul {
 
 .detail-content:focus {
   outline: none;
+}
+
+.content-skeleton {
+  width: 80%;
+  height: 26px;
+  margin-bottom: 10px;
+  background-color: rgba(165, 165, 165, 0.1);
+  animation: skeleton 1s infinite linear;
+}
+
+@keyframes skeleton {
+  0% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
+  50% {
+    background-color: rgba(165, 165, 165, 0.3);
+  }
+  100% {
+    background-color: rgba(165, 165, 165, 0.1);
+  }
 }
