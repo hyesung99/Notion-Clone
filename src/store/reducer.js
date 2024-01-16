@@ -16,17 +16,17 @@ export const closeBranch = ({ id }) => ({
   payload: id,
 })
 
-export const setTree = () => ({
-  type: 'SET_TREE',
+export const getTree = () => ({
+  type: 'GET_TREE',
 })
 
-export const setTreeSuccess = ({ documents }) => ({
-  type: 'SET_TREE_SUCCESS',
+export const getTreeSuccess = ({ documents }) => ({
+  type: 'GET_TREE_SUCCESS',
   payload: { documents },
 })
 
-export const setTreeFail = (error) => ({
-  type: 'SET_TREE_ERROR',
+export const getTreeFail = (error) => ({
+  type: 'GET_TREE_ERROR',
   payload: { error },
 })
 
@@ -35,28 +35,28 @@ export const setBranchTitle = ({ title, id }) => ({
   payload: { title, id },
 })
 
-export const setContent = ({ content }) => ({
-  type: 'SET_CONTENT',
+export const getContent = ({ content }) => ({
+  type: 'GET_CONTENT',
   payload: content,
 })
 
-export const setContentSuccess = ({ content }) => ({
-  type: 'SET_CONTENT_SUCCESS',
+export const getContentSuccess = ({ content }) => ({
+  type: 'GET_CONTENT_SUCCESS',
   payload: { content },
 })
 
-export const setContentFail = (error) => ({
-  type: 'SET_CONTENT_ERROR',
+export const getContentFail = (error) => ({
+  type: 'GET_CONTENT_ERROR',
   payload: { error },
 })
 
-export const setDocumentTreeThunk = () => async (dispatch) => {
-  dispatch(setTree())
+export const getDocumentTreeThunk = () => async (dispatch) => {
+  dispatch(getTree())
   try {
     const documents = await getDocumentTree()
-    dispatch(setTreeSuccess({ documents }))
+    dispatch(getTreeSuccess({ documents }))
   } catch (error) {
-    dispatch(setTreeFail(error))
+    dispatch(getTreeFail(error))
   }
 }
 
@@ -65,7 +65,7 @@ export const addBranchThunk =
   async (dispatch) => {
     try {
       await postDocument({ title, parentId })
-      dispatch(setDocumentTreeThunk())
+      dispatch(getDocumentTreeThunk())
       dispatch(openBranch({ id: parentId }))
     } catch {}
   }
@@ -74,7 +74,7 @@ export const deleteBranchThunk =
   ({ id }) =>
   async (dispatch) => {
     await deleteDocument({ id })
-    dispatch(setDocumentTreeThunk())
+    dispatch(getDocumentTreeThunk())
   }
 
 export const putDocumentTitleThunk =
@@ -92,7 +92,7 @@ export const putDocumentContentThunk =
   ({ content, id }) =>
   async (dispatch) => {
     await putDocument({ content, id })
-    dispatch(setDocumentTreeThunk())
+    dispatch(getDocumentTreeThunk())
   }
 
 const documentTreeInitialState = {
@@ -134,7 +134,7 @@ export const documentTreeReducer = (
       targetDocument.title = action.payload.title
       return newState
 
-    case 'SET_TREE':
+    case 'GET_TREE':
       return {
         ...state,
         documents: {
@@ -144,7 +144,7 @@ export const documentTreeReducer = (
         },
       }
 
-    case 'SET_TREE_SUCCESS':
+    case 'GET_TREE_SUCCESS':
       return {
         ...state,
         documents: {
@@ -153,7 +153,7 @@ export const documentTreeReducer = (
           error: null,
         },
       }
-    case 'SET_TREE_ERROR':
+    case 'GET_TREE_ERROR':
       return {
         ...state,
         documents: {
@@ -183,7 +183,7 @@ export const documentDetailReducer = (
   action
 ) => {
   switch (action.type) {
-    case 'SET_CONTENT':
+    case 'GET_CONTENT':
       return {
         ...state,
         content: {
@@ -192,7 +192,7 @@ export const documentDetailReducer = (
           error: null,
         },
       }
-    case 'SET_CONTENT_SUCCESS':
+    case 'GET_CONTENT_SUCCESS':
       return {
         ...state,
         content: {
@@ -202,7 +202,7 @@ export const documentDetailReducer = (
         },
       }
 
-    case 'SET_CONTENT_ERROR':
+    case 'GET_CONTENT_ERROR':
       return {
         ...state,
         content: {
