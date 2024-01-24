@@ -16,12 +16,12 @@ module.exports = {
     rules: [
       {
         test: /\.(js)$/,
-        include: path.resolve(dirname, 'src'),
+        include: path.resolve(__dirname, 'src'),
         use: 'babel-loader',
       },
       {
         test: /\.(css)$/,
-        include: path.resolve(dirname, 'src'),
+        include: path.resolve(__dirname, 'src'),
         use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
