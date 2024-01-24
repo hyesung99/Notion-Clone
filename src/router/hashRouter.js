@@ -1,6 +1,6 @@
 import { createHashRouter } from '../core/createHashRouter.js'
-import HomePage from '../page/home.page.js'
-import DetailPage from '../page/detail.page.js'
+import HomePage from '../page/homePage.js'
+import DetailPage from '../page/DetailPage.js'
 
 const routes = {
   '/': HomePage,

@@ -1,5 +1,5 @@
 import Component from './core/Component.js'
-import TreeComponent from './component/Tree.component.js'
+import DocumentTree from './component/DocumentTree.js'
 import { hashRouter } from './router/hashRouter.js'
 
 export default class App extends Component {
@@ -16,7 +16,7 @@ export default class App extends Component {
     const $documentTree = this.$target.querySelector('#document-tree')
 
     this.createChildComponent({
-      component: TreeComponent,
+      component: DocumentTree,
       componentOptions: {
         $target: $documentTree,
       },

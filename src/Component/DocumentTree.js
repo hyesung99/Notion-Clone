@@ -3,10 +3,10 @@ import { store } from '../core/createStore.js'
 import { addBranchThunk, getDocumentTreeThunk } from '../store/reducer.js'
 import { selectDocumentTree } from '../store/selector.js'
 import useSelector from '../service/useSelector.js'
-import DocumentBranchComponent from './Branch.component.js'
+import DocumentBranch from './DocumentBranch.js'
 import { hashRouter } from '../router/hashRouter.js'
 
-export default class DocumentTreeComponent extends Component {
+export default class DocumentTree extends Component {
   template() {
     return `
     <a class="home-logo">홈</a>
@@ -38,7 +38,7 @@ export default class DocumentTreeComponent extends Component {
       $documentBranchUl.classList.add('root-branch-list')
       $treeContainer.appendChild($documentBranchUl)
       this.createChildComponent({
-        component: DocumentBranchComponent,
+        component: DocumentBranch,
         componentOptions: {
           $target: $documentBranchUl,
           props: { documentInfo },

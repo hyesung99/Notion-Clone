@@ -5,7 +5,7 @@ import { putBranchTitle, putDocumentTitleThunk } from '../store/reducer.js'
 import { selectDetailTitle } from '../store/selector.js'
 import { getDetailId } from '../service/getDetailId.js'
 
-export default class Title extends Component {
+export default class DetailTitle extends Component {
   template() {
     const id = getDetailId()
     const { title } = useSelector(selectDetailTitle, id)
