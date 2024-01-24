@@ -15,14 +15,17 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(js)$/,
-        include: path.resolve(__dirname, 'src'),
-        use: 'babel-loader',
+        test: /\.(?:js|mjs|cjs)$/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [['@babel/preset-env', { targets: 'defaults' }]],
+          },
+        },
       },
       {
-        test: /\.(css)$/,
-        include: path.resolve(__dirname, 'src'),
-        use: [MiniCssExtractPlugin.loader, 'css-loader'],
+        test: /\.css$/i,
+        use: ['style-loader', 'css-loader'],
       },
     ],
   },
