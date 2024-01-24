@@ -1,9 +1,9 @@
-import path from 'path'
-import { fileURLToPath } from 'url'
+const path = require('path')
+
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-const dirname = path.dirname(fileURLToPath(import.meta.url))
+const dirname = path.dirname(__dirname)
 
 module.exports = {
   mode: 'production',
