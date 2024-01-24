@@ -3,6 +3,7 @@ const path = require('path')
 const dirname = path.dirname(__dirname)
 
 module.exports = {
+  mode: 'production',
   entry: './src/main.js',
   output: {
     filename: 'bundle.js',
