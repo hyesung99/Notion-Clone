@@ -1,6 +1,9 @@
-const path = require('path')
+import path from 'path'
+import { fileURLToPath } from 'url'
+import HtmlWebpackPlugin from 'html-webpack-plugin'
+import MiniCssExtractPlugin from 'mini-css-extract-plugin'
 
-const dirname = path.dirname(__dirname)
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 module.exports = {
   mode: 'production',
@@ -22,6 +25,10 @@ module.exports = {
         include: path.resolve(dirname, 'src'),
         use: ['css-loader'],
       },
+    ],
+    plugins: [
+      new HtmlWebpackPlugin({ template: './src/index.html' }),
+      new MiniCssExtractPlugin(),
     ],
   },
 }
