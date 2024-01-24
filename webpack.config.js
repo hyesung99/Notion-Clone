@@ -7,7 +7,7 @@ const dirname = path.dirname(__dirname)
 
 module.exports = {
   mode: 'production',
-  entry: './src/main.js',
+  entry: './src/index.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(dirname, 'dist'),
@@ -23,7 +23,7 @@ module.exports = {
       {
         test: /\.(css)$/,
         include: path.resolve(dirname, 'src'),
-        use: ['css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
