@@ -1,6 +1,6 @@
 import Component from '../core/Component.js'
-import DetailTitleComponent from '../component/DetailTitle.js'
-import DetailContentComponent from '../component/DetailContent.js'
+import DetailTitle from '../component/DetailTitle.js'
+import DetailContent from '../component/DetailContent.js'
 
 export default class DetailPage extends Component {
   template() {
@@ -16,14 +16,14 @@ export default class DetailPage extends Component {
     this.$target.innerHTML = this.template()
 
     this.createChildComponent({
-      component: DetailTitleComponent,
+      component: DetailTitle,
       componentOptions: {
         $target: document.querySelector('.title-section'),
       },
     })
 
     this.createChildComponent({
-      component: DetailContentComponent,
+      component: DetailContent,
       componentOptions: {
         $target: document.querySelector('.content-section'),
       },
