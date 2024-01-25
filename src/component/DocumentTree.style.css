@@ -1,8 +1,7 @@
-.home-logo {
+.home-logo-container {
   display: flex;
+  height: 40px;
   font-size: 16px;
-  cursor: pointer;
-  margin-bottom: 10px;
 }
 
 .root-branch-button {

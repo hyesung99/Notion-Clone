@@ -5,11 +5,12 @@ import { selectDocumentTree } from '../store/selector.js'
 import useSelector from '../service/useSelector.js'
 import DocumentBranch from './DocumentBranch.js'
 import { hashRouter } from '../router/hashRouter.js'
+import HomeLogo from './common/HomeLogo.js'
 
 export default class DocumentTree extends Component {
   template() {
     return `
-    <a class="home-logo">홈</a>
+    <div class="home-logo-container"></div>
     <div class="tree-container"></div>
     <button class="add-branch-button root-branch-button">+</button>
     `
@@ -28,9 +29,18 @@ export default class DocumentTree extends Component {
       data: documentTree,
       error,
     } = useSelector(selectDocumentTree)
-    const $treeContainer = document.querySelector('.tree-container')
 
     if (loading || error) return
+
+    const $treeContainer = document.querySelector('.tree-container')
+    const $homeLogoContainer = document.querySelector('.home-logo-container')
+
+    this.createChildComponent({
+      component: HomeLogo,
+      componentOptions: {
+        $target: $homeLogoContainer,
+      },
+    })
 
     documentTree.forEach((documentInfo) => {
       const $documentBranchUl = document.createElement('ul')
@@ -51,8 +61,5 @@ export default class DocumentTree extends Component {
     this.setEvent('click', '.root-branch-button', () =>
       store.dispatch(addBranchThunk({ title: '제목없음', parentId: null }))
     )
-    this.setEvent('click', '.home-logo', () => {
-      hashRouter.navigate('')
-    })
   }
 }
