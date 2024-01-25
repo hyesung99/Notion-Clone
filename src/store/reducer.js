@@ -83,11 +83,6 @@ export const putDocumentTitleThunk =
     await putDocument({ title, id })
   }
 
-export const putBranchTitle =
-  ({ title, id }) =>
-  (dispatch) =>
-    dispatch(setBranchTitle({ title, id }))
-
 export const putDocumentContentThunk =
   ({ content, id }) =>
   async (dispatch) => {
