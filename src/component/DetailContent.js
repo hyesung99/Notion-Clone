@@ -1,16 +1,15 @@
+import Component from '../core/Component.js'
+import TextArea from './common/TextArea.js'
+import DetailContentSkeleton from './skeletons/DetailContentSkeleton.js'
+import useSelector from '../service/useSelector.js'
 import { putDocument } from '../apis/document.api.js'
 import { STORAGE_KEYS } from '../constants/storage.js'
-import Component from '../core/Component.js'
 import { store } from '../core/createStore.js'
 import { getDetailId } from '../service/getDetailId.js'
-import useSelector from '../service/useSelector.js'
-
 import { setStorageItem } from '../storage/storage.js'
 import { getDocumentContentThunk } from '../store/reducer.js'
 import { selectDetailContent } from '../store/selector.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
-import TextArea from './common/TextArea.component.js'
-import DetailContentSkeleton from './skeletons/DetailContentSkeleton.js'
 
 export default class DetailContent extends Component {
   created() {
