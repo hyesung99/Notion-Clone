@@ -10,6 +10,7 @@ import { setStorageItem } from '../storage/storage.js'
 import { getDocumentContentThunk } from '../store/reducer.js'
 import { selectDetailContent } from '../store/selector.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
+import { hashRouter } from '../router/hashRouter.js'
 
 export default class DetailContent extends Component {
   created() {
@@ -30,6 +31,11 @@ export default class DetailContent extends Component {
           $target: this.$target,
         },
       })
+      return
+    }
+
+    if (error) {
+      hashRouter.navigate('/error')
       return
     }
 
