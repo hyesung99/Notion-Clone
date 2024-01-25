@@ -5,7 +5,7 @@ import { hashRouter } from './router/hashRouter.js'
 export default class App extends Component {
   template() {
     return `
-    <aside id='document-tree'></aside>
+    <aside class='document-tree'></aside>
     <section class='page-section'/>
   `
   }
@@ -13,7 +13,7 @@ export default class App extends Component {
   async render() {
     this.$target.innerHTML = this.template()
 
-    const $documentTree = this.$target.querySelector('#document-tree')
+    const $documentTree = this.$target.querySelector('.document-tree')
 
     this.createChildComponent({
       component: DocumentTree,

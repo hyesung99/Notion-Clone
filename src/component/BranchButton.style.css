@@ -1,0 +1,20 @@
+.add-branch-button,
+.delete-branch-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  appearance: none;
+  border: none;
+  width: 20px;
+  height: 20px;
+  background: none;
+  font-size: 20px;
+  transition: all 0.3s;
+  display: none;
+}
+
+.add-branch-button:hover,
+.delete-branch-button:hover {
+  cursor: pointer;
+  color: #8b8b8b;
+}

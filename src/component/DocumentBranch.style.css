@@ -1,0 +1,49 @@
+.branch-item,
+.branch-item-empty {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  align-items: center;
+}
+
+.branch-item:hover button {
+  display: block;
+}
+
+.branch-item:hover {
+  border-radius: 10px;
+  background-color: #ededeb;
+}
+
+.branch-open-button {
+  margin: auto;
+  padding-bottom: 2px;
+  text-align: center;
+  cursor: pointer;
+  font-size: 10px;
+  background: none;
+  border: none;
+}
+
+.branch-link {
+  display: inline-block;
+  white-space: nowrap;
+  width: 100%;
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.branch-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.branch-list {
+  width: 100%;
+  padding-left: 10px;
+}

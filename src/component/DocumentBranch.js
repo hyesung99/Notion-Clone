@@ -23,7 +23,6 @@ export default class DocumentBranch extends Component {
 
   render() {
     const { documentInfo } = this.props
-    // this.$target.innerHTML = this.template()
     this.$target.insertAdjacentHTML('beforeend', this.template())
 
     const $childBranches = document.querySelector(

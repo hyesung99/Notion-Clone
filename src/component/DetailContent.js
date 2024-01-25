@@ -9,7 +9,7 @@ import { setStorageItem } from '../storage/storage.js'
 import { getDocumentContentThunk } from '../store/reducer.js'
 import { selectDetailContent } from '../store/selector.js'
 import { applyDebounce } from '../utils/applyDebounce.js'
-import TextArea from './TextArea.component.js'
+import TextArea from './common/TextArea.component.js'
 import DetailContentSkeleton from './skeletons/DetailContentSkeleton.js'
 
 export default class DetailContent extends Component {

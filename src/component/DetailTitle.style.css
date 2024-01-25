@@ -1,0 +1,15 @@
+.detail-title {
+  display: flex;
+  border: none;
+  border-bottom: 1px solid black;
+  height: 10%;
+  min-height: 80px;
+  margin-bottom: 20px;
+  font-size: 40px;
+  font-weight: bold;
+  align-items: center;
+}
+
+.detail-title:focus {
+  outline: none;
+}

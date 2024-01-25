@@ -1,0 +1,7 @@
+.content-skeleton {
+  width: 80%;
+  height: 26px;
+  margin-bottom: 10px;
+  background-color: rgba(165, 165, 165, 0.1);
+  animation: skeleton 1s infinite linear;
+}
